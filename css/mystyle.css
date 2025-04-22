@@ -1,0 +1,50 @@
+*{
+	background-color: #ffffff;
+	font-size: 1.171303074670571vw;
+}
+
+body{
+  background-color: #f8f9fa;
+  font-size: 1.171303074670571vw;
+}
+
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+
+
+a{
+  color: black;
+}
+
+a:hover{
+  color: black;
+}
+
+a:after{
+  color: black;
+}
+
+.bg-color-bg{
+  background-color: #f8f9fa;
+}
+
+#bs-example-navbar-collapse-1{
+  background-color: #f8f9fa
+}
+
+.ddl-title{
+  background-color:#5bc0de !important;
+  color:#fff !important;
+  font-style:italic;
+  font-size:80%;
+}
+  
+.ddl-select.input-group-btn:first-child>.btn-group:not(:first-child)>.btn {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  
+}
+.btn.dropdown-toggle{
+  border-radius:0;
+}
