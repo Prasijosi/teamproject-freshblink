@@ -20,11 +20,11 @@ if (isset($_SESSION['cart'])) {
             </div>
             <!-- Search Bar -->
             <div class="col-12 col-md-6 mb-2 mb-md-0">
-                <form action="search_product.php" method="GET">
+                <form action="search_product.php" method="POST">
                     <div class="input-group" style="background:#f3faef; border-radius:6px;">
                         <input id="txtkey" type="text" name="search_Txt" class="form-control border-0" placeholder="Search products" style="background:transparent;">
                         <div class="input-group-append">
-                            <button id="btn-search" class="btn" type="submit" style="background:#4BB543;">
+                            <button id="btn-search" class="btn" type="submit" style="background:#4BB543;" name="submit_search">
                                 <i class="fas fa-search" style="color:#fff; background:#4BB543;"></i>
                             </button>
                         </div>
