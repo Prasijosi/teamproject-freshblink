@@ -29,7 +29,15 @@ if (isset($_GET['product_id'])) {
 <?php
 include 'connection.php';
 $product_id = $_GET['product_id'];
-$query = "SELECT r.*, c.Full_Name as Customer_Name FROM review r, customer c WHERE r.Customer_Id = c.Customer_Id AND Product_Id = :pid";
+$query = "SELECT *
+FROM (
+    SELECT r.*, c.Full_Name as Customer_Name
+    FROM review r, customer c
+    WHERE r.Customer_Id = c.Customer_Id
+      AND Product_Id = :pid
+)
+WHERE ROWNUM <= 3
+";
 $statement = oci_parse($connection, $query);
 oci_bind_by_name($statement, ':pid', $product_id);
 oci_execute($statement);
