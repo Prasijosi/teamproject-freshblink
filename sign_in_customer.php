@@ -103,7 +103,6 @@
                     <a href="index.php">
                         <img src="images/logo.png" class="signin-logo" alt="Logo">
                     </a>
-                    <h4 class="signin-title">Customer Sign In</h4>
                 </div>
 
                 <form method="POST" action="customer/customer_sign_in.php">
@@ -136,7 +135,7 @@
                     </div>
 
                     <div class="text-center mt-3">
-                        <a href="sign_up_customer.php" class="signup-link">New Member? Sign Up Here</a>
+                        <a href="sign_up_customer.php" class="signup-link">Sign Up?</a>
                     </div>
                 </form>
             </div>
