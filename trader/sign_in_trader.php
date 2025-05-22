@@ -11,7 +11,7 @@
 
         <div class="text-center mt-4">
             <a href="../index.php">
-                <img src="../images/logo.png" class="img-fluid" style="width: 70px; height: 70px;" alt="GoCart Logo">
+                <img src="../images/logo.png" class="img-fluid" style="width: 70px; height: 70px;" alt="FreshBlink Logo">
             </a>
         </div>
 

@@ -21,19 +21,20 @@ while ($row = oci_fetch_assoc($result)) {
     $customer_id = $row['CUSTOMER_ID'];
 }
 ?>
-<div class="container mt-5">
-    <?php include 'header.php'; ?>
 
-    <?php if (isset($_GET['msg'])): ?>
-        <h4 class="text-center text-success"><?= htmlspecialchars($_GET['msg']) ?></h4>
-    <?php endif; ?>
+<?php include 'header.php'; ?>
 
+<?php if (isset($_GET['msg'])): ?>
+    <h4 class="text-center text-success"><?= htmlspecialchars($_GET['msg']) ?></h4>
+<?php endif; ?>
+
+<div class="mt-5">
     <div class="row">
         <!-- Sidebar -->
         <aside class="col-md-4 mb-4">
             <div class="card shadow-sm">
                 <div class="card-header bg-light text-dark">
-                    <h4 class="mb-0">My Account</h4>
+                    <h4 class="mb-0 bg-light">My Account</h4>
                 </div>
                 <div class="list-group list-group-flush">
                     <a href="customer_profile.php" class="list-group-item list-group-item-action">Dashboard</a>

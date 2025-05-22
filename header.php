@@ -8,8 +8,8 @@ if (isset($_SESSION['cart'])) {
 
 ?>
 
-<header class="container-fluid py-2" style="background: #fff;">
-    <div class="container">
+<header class="py-2" style="background: #fff;">
+    <div class="">
         <div class="row align-items-center">
             <!-- Logo -->
             <div class="col-12 col-md-2 d-flex align-items-center mb-2 mb-md-0">

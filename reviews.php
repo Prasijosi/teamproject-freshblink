@@ -17,19 +17,20 @@ if (isset($_GET['msg'])) {
 		font-size: 1.5vw;
 	}
 </style>
-<div class="container mt-5">
-	<?php include 'header.php' ?>
+<?php include 'header.php' ?>
+
+<div class="mt-5">
 	<div class="row">
 		<!-- Sidebar -->
 		<aside class="col-md-4 mb-4">
 			<div class="card shadow-sm">
 				<div class="card-header bg-light text-dark">
-					<h4 class="mb-0">My Account</h4>
+					<h4 class="mb-0 bg-light">My Account</h4>
 				</div>
 				<div class="list-group list-group-flush">
 					<a href="customer_profile.php" class="list-group-item list-group-item-action">Dashboard</a>
 					<a href="orders.php" class="list-group-item list-group-item-action">Orders</a>
-					<a href="reviews.php" class="list-group-item list-group-item-action active">Product Reviews</a>
+					<a href="reviews.php" class="list-group-item list-group-item-action">Product Reviews</a>
 				</div>
 			</div>
 		</aside>
@@ -38,7 +39,7 @@ if (isset($_GET['msg'])) {
 		<section class="col-md-8">
 			<div class="card shadow-sm mb-4">
 				<div class="card-header bg-light text-dark">
-					<h4 class="mb-0">My Reviews</h4>
+					<h4 class="mb-0 bg-light">My Reviews</h4>
 				</div>
 				<div class="card-body">
 					<?php
@@ -113,7 +114,7 @@ if (isset($_GET['msg'])) {
 						}
 					}
 					?>
-					<div class="mt-5">
+					<div style="max-height: 400px; overflow-y: auto;">
 						<?php
 						include 'connection.php';
 						$username = $_SESSION['username'];
@@ -154,8 +155,8 @@ if (isset($_GET['msg'])) {
 										<div class="card mb-3">
 											<div class="card-header bg-light">
 												<div class="row align-items-center">
-													<div class="col">
-														<strong>Reviewed on: <?php echo htmlspecialchars($rdate); ?></strong>
+													<div class="col bg-light">
+														<strong class="bg-light">Reviewed on: <?php echo htmlspecialchars($rdate); ?></strong>
 													</div>
 												</div>
 											</div>

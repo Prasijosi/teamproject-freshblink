@@ -13,7 +13,7 @@
             <form class="border p-5 mt-2 w-100" method="POST" action="trader_sign_up.php" style="max-width: 600px;">
                 <div class="text-center">
                     <div class="h4">Trader Registration</div>
-                    <div class="h6 mt-3">Welcome! You are one step away to sell on goCart</div>
+                    <div class="h6 mt-3">Welcome! You are one step away to sell on FreshBlink</div>
                 </div>
 
                 <?php
@@ -60,7 +60,7 @@
                 <div class="form-check mb-3">
                     <input class="form-check-input" type="checkbox" id="checkbox" name="cb">
                     <label class="form-check-label" for="checkbox">
-                        By creating an account, you agree to goCart Privacy Notice and Terms of Use.
+                        By creating an account, you agree to FreshBlink Privacy Notice and Terms of Use.
                     </label>
                 </div>
 

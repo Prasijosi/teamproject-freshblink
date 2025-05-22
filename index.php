@@ -2,9 +2,7 @@
 include 'condition_checker/get_all_products.php';
 ?>
 
-<div class="container-fluid">
-    <section class="container">
-        <?php include 'header.php';
+<?php include 'header.php';
         if (isset($_GET['msg'])) {
             $user_created_msg = $_GET['msg'];
             echo "
@@ -14,6 +12,9 @@ include 'condition_checker/get_all_products.php';
                     </div>";
         }
         ?>
+        
+<div class="container-fluid">
+    <section class="container">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-2">
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -94,7 +95,7 @@ include 'condition_checker/get_all_products.php';
         <div class="container my-5">
             <h3 class="font-weight-bold mb-4">Popular Products</h3>
             <div class="row">
-                <?php foreach (array_slice($popular_products, 5, 10) as $product): ?>
+                <?php foreach (array_slice($popular_products, 5, length: 7) as $product): ?>
                     <a href="<?= $product['link'] ?>" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4">
                         <div class="card h-100 border-0 shadow-sm" style="border-radius: 14px;">
                             <img src="<?= $product['img'] ?>" class="card-img-top p-3" alt="<?= htmlspecialchars($product['name']) ?>" style="height:120px;object-fit:contain;">
@@ -113,7 +114,7 @@ include 'condition_checker/get_all_products.php';
                 <h3 class="font-weight-bold">Deals Of The Day</h3>
             </div>
             <div class="row">
-                <?php foreach (array_slice($popular_products, 0, 5) as $product): ?>
+                <?php foreach (array_slice($popular_products, 0, 4) as $product): ?>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                         <div class="card h-100 border-0 shadow-sm" style="border-radius: 18px;">
                             <img src="<?= $product['img'] ?>" class="card-img-top" alt="<?= htmlspecialchars($product['name']) ?>" style="height:180px;object-fit:cover;border-top-left-radius:18px;border-top-right-radius:18px;">

@@ -4,14 +4,15 @@ if (!isset($_SESSION['username'])) {
 }
 @$profile_picture = $_SESSION['profile_picture'];
 ?>
-<div class="container mt-5">
 	<?php include 'header.php'; ?>
+
+<div class="mt-5">
 	<div class="row">
 		<!-- Sidebar -->
 		<aside class="col-md-4 mb-4">
 			<div class="card shadow-sm">
 				<div class="card-header bg-light text-dark">
-					<h4 class="mb-0">My Account</h4>
+					<h4 class="mb-0 bg-light">My Account</h4>
 				</div>
 				<div class="card-body text-center">
 					<div class="mb-3">
@@ -26,7 +27,7 @@ if (!isset($_SESSION['username'])) {
 				</div>
 				<div class="list-group list-group-flush">
 					<a href="customer_profile.php" class="list-group-item list-group-item-action">Dashboard</a>
-					<a href="orders.php" class="list-group-item list-group-item-action active">Orders</a>
+					<a href="orders.php" class="list-group-item list-group-item-action">Orders</a>
 					<a href="reviews.php" class="list-group-item list-group-item-action">Product Reviews</a>
 				</div>
 			</div>
@@ -36,9 +37,9 @@ if (!isset($_SESSION['username'])) {
 		<section class="col-md-8">
 			<div class="card shadow-sm">
 				<div class="card-header bg-light text-dark">
-					<h4 class="mb-0">My Orders</h4>
+					<h4 class="mb-0 bg-light">My Orders</h4>
 				</div>
-				<div class="card-body">
+				<div class="card-body" style="max-height: 400px; overflow-y: auto;">
 					<?php
 					include 'connection.php';
 
@@ -62,16 +63,17 @@ if (!isset($_SESSION['username'])) {
 						<div class="card mb-3">
 							<div class="card-header bg-light">
 								<div class="row align-items-center">
-									<div class="col">
-										<strong>Order #<?php echo htmlspecialchars($order_no); ?></strong>
+									<div class="col bg-light">
+										<strong class="bg-light">Order #<?php echo htmlspecialchars($order_no); ?></strong>
 									</div>
-									<div class="col text-end">
-										<small class="text-muted"><?php echo htmlspecialchars($order_date); ?></small>
+									<div class="col text-end bg-light">
+										<small class="text-muted bg-light"><?php echo htmlspecialchars($order_date); ?></small>
 									</div>
 								</div>
 							</div>
 							<div class="card-body">
-								<div class="row align-items-center">
+								<div class="row align-items-center" 
+					>
 									<div class="col-md-3 text-center">
 										<img src="<?php echo htmlspecialchars($Product_Image); ?>" 
 											 alt="<?php echo htmlspecialchars($product_name); ?>" 
@@ -87,7 +89,7 @@ if (!isset($_SESSION['username'])) {
 											<?php echo $order_status == 0 ? 'Order Pending' : 'Order Delivered'; ?>
 										</span>
 									</div>
-								</div>
+								</style=>
 							</div>
 						</div>
 						<?php

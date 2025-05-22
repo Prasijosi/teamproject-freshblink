@@ -1,4 +1,4 @@
-<footer style="background:#e5e5e5; font-family: 'Poppins', Arial, sans-serif;">
+<footer>
   <div class="pt-5 pb-2" style="background:#e5e5e5;">
     <div class="row" style="background:#e5e5e5;">
       <!-- Logo -->

@@ -1,35 +1,37 @@
-<?php include 'start.php';
-
-
+<?php
+include 'start.php';
 include "connection.php";
+
+if (!isset($_SESSION['username'])) {
+    header('Location:sign_in_customer.php');
+    exit;
+}
+
 $un = $_SESSION['username'];
+$cemail = '';
 
-	$sql100 = " SELECT Email FROM customer WHERE Username = '$un' ";
+// Get customer email
+$sql100 = "SELECT Email FROM customer WHERE Username = :username";
+$result100 = oci_parse($connection, $sql100);
+oci_bind_by_name($result100, ":username", $un);
+oci_execute($result100);
 
+if ($row = oci_fetch_assoc($result100)) {
+    $cemail = $row['EMAIL'];
+}
 
-	$result100 = oci_parse($connection, $sql100);
-	oci_execute($result100);
+if (empty($cemail)) {
+    die("Customer email not found.");
+}
 
-	while ($row = oci_fetch_assoc($result100)) {
-
-		$cemail = $row['EMAIL'];
-
-	}
-	
-
-$to_email = "echo $cemail";
-$subject = "Your goCart order has been received!";
-$headers = "From: goCart  <josiprasi@gmail.com>";
+$to_email = $cemail;
+$subject = "Your FreshBlink order has been received!";
+$headers = "From: FreshBlink <josiprasi@gmail.com>\r\n";
 $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-
-
-
-
-
 if (isset($_GET['PayerID'])) {
-	$payerid = $_GET['PayerID'];
+    $payerid = $_GET['PayerID'];
 }
 
 if (!isset($_SESSION['username'])) {
@@ -149,7 +151,7 @@ while ($row = oci_fetch_array($result1)) {
 			} else {
 				echo " <script>
 								alert('Order Not Placed');
-								window.location.href='checkout.php';
+								//window.location.href='checkout.php';
 								</script>";
 			}
 		} //
@@ -251,7 +253,7 @@ $message = '
                 <div>
                     
                 Bill From: <br>
-                goCart <br>
+                FreshBlink <br>
                 Clechshudderfax <br>
                 josiprasi@gmail.com <br>
                 <br>
@@ -382,25 +384,15 @@ if($gt>0){
 	
 }
 else{
-	header('Location:index.php');
+	// header('Location:index.php');
 	//echo "Plz order";
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 ?>
-<div class="container">
 	<?php include 'header.php' ?>
+
+<div class="container mb-5">
 	<div class="row text-center mt-5" style="border: 0.1vw solid black;">
 		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 			<div class="h1 mt-5">Thank You !</div>

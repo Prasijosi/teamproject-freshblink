@@ -21,8 +21,9 @@ if (isset($_GET['id'])) {
 	}
 }
 ?>
+<?php include 'header.php'; ?>
+
 <div class="container mt-5">
-	<?php include 'header.php'; ?>
 
 	<?php if (isset($_GET['msg'])): ?>
 		<h4 class="text-center text-danger"><?php echo htmlspecialchars($_GET['msg']); ?></h4>
