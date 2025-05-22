@@ -1,104 +1,125 @@
 <?php
 include 'start.php';
 
-if (isset($_SESSION['username'])) {
-	@$customer_id = $_SESSION['customer_id'];
-	@$profile_picture = $_SESSION['profile_picture'];
-
-	if (isset($_POST['submit'])) {
-
-		$Profile_Image = $_FILES['Profile_Image'];
-		$filename = $Profile_Image['name'];
-		$fileerror = $Profile_Image['error'];
-		$filetmp = $Profile_Image['tmp_name'];
-
-		$imgext = explode('.', $filename);
-		$filecheck = strtolower(end($imgext));
-
-		$fileextstored = array('png', 'jpg', 'jpeg');
-
-		if (in_array($filecheck, $fileextstored)) {
-			$destinationfile = 'images/customer/' . $filename;
-			move_uploaded_file($filetmp, $destinationfile);
-
-			include 'connection.php';
-
-			$sql = "UPDATE customer SET Profile_Image = '$destinationfile' where Customer_ID='$customer_id'";
-
-			$query = oci_parse($connection, $sql);
-			oci_execute($query);
-			unset( $_SESSION['profile_picture']); //
-
-
-			include('connection.php');
-     
-			$sql = "SELECT * FROM customer where  Customer_ID='$customer_id'";
-			$qry = oci_parse($connection, $sql);
-			oci_execute($qry);
-	
-			while ($r = oci_fetch_array($qry)) {
-				$_SESSION['profile_picture']=$r['PROFILE_IMAGE'];
-	
-			}
-
-
-			header('Location:customer_profile.php'); //
-
-
-		} else {
-			echo "
-				<div class='row border p-4 mt-4'> 
-	        	<div class='col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center' style='color:red;'>";
-			echo "Error while Uploading!</div></div>";
-		}
-	}
-} else {
-	header('Location:sign_in_customer.php');
+if (!isset($_SESSION['username'])) {
+	header('Location: sign_in_customer.php');
 	exit();
 }
+
+$username = $_SESSION['username'];
+$customer_id = $_SESSION['customer_id'] ?? null;
+$profile_picture = $_SESSION['profile_picture'] ?? 'images/customer/default-profile.png';
+
+if (isset($_POST['submit'])) {
+	$Profile_Image = $_FILES['Profile_Image'];
+	$filename = $Profile_Image['name'];
+	$fileerror = $Profile_Image['error'];
+	$filetmp = $Profile_Image['tmp_name'];
+
+	$imgext = explode('.', $filename);
+	$filecheck = strtolower(end($imgext));
+
+	$fileextstored = array('png', 'jpg', 'jpeg');
+
+	if (in_array($filecheck, $fileextstored)) {
+		// Create directory if it doesn't exist
+		$upload_dir = 'images/customer/';
+		if (!file_exists($upload_dir)) {
+			mkdir($upload_dir, 0777, true);
+		}
+
+		// Generate unique filename
+		$new_filename = uniqid() . '.' . $filecheck;
+		$destinationfile = $upload_dir . $new_filename;
+
+		if (move_uploaded_file($filetmp, $destinationfile)) {
+			include 'connection.php';
+
+			$sql = "UPDATE customer SET Profile_Image = :profile_image WHERE Customer_ID = :customer_id";
+			$query = oci_parse($connection, $sql);
+			oci_bind_by_name($query, ':profile_image', $destinationfile);
+			oci_bind_by_name($query, ':customer_id', $customer_id);
+			
+			if (oci_execute($query)) {
+				// Update session
+				$_SESSION['profile_picture'] = $destinationfile;
+				
+				// Redirect with success message
+				header('Location: customer_profile.php?msg=Profile picture updated successfully');
+				exit();
+			}
+		}
+	}
+	
+	// If we get here, there was an error
+	$error_message = "Error while uploading! Please try again.";
+}
 ?>
-<div class="container">
-	<?php include 'header.php'; ?>
-	<br />
+
+<?php include 'header.php'; ?>
+
+<div class="mt-5">
 	<div class="row">
-		<div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-4 mt-5">
-			<div class="row">
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-start mt-4 h3">
-					My Account
+		<!-- Sidebar -->
+		<aside class="col-md-4 mb-4">
+			<div class="card shadow-sm">
+				<div class="card-header bg-light text-dark">
+					<h4 class="mb-0">My Account</h4>
 				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-start h5 mt-2">
-					<a href="customer_profile.php" class="display-5">Dashboard</a>
-				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-start h5 mt-2">
-					<a href="orders.php" class="display-5">Orders</a>
-				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-start h5 mt-2">
-					<a href="#" class="display-5">Product Reviews</a>
+				<div class="list-group list-group-flush">
+					<a href="customer_profile.php" class="list-group-item list-group-item-action">Dashboard</a>
+					<a href="orders.php" class="list-group-item list-group-item-action">Orders</a>
+					<a href="reviews.php" class="list-group-item list-group-item-action">Product Reviews</a>
 				</div>
 			</div>
-		</div>
-		<div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 p-4 mt-5 border">
-			<form action="#" method="POST" enctype="multipart/form-data">
-				<div class="row">
-					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center">
-						<a href="#" class="d-flex align-items-center justify-content-center">
-							<img src="<?php echo $profile_picture ?>" class="img-fluid mt-4 img-thumbnail" style="width: 18vw; height: 12vw;" alt="No Picture">
-						</a>
-					</div>
+		</aside>
+
+		<!-- Main Content -->
+		<section class="col-md-8">
+			<div class="card shadow-sm">
+				<div class="card-body">
+					<h4 class="card-title text-center mb-4">Update Profile Picture</h4>
+					
+					<?php if (isset($error_message)): ?>
+						<div class="alert alert-danger text-center" role="alert">
+							<?= htmlspecialchars($error_message) ?>
+						</div>
+					<?php endif; ?>
+
+					<form action="" method="POST" enctype="multipart/form-data">
+						<div class="text-center mb-4">
+							<img src="<?= htmlspecialchars($profile_picture) ?>" 
+								 alt="Profile Picture" 
+								 class="img-thumbnail rounded-circle"
+								 style="width: 200px; height: 200px; object-fit: cover;">
+						</div>
+
+						<div class="mb-4">
+							<label for="Profile_Image" class="form-label">Choose new profile picture</label>
+							<input type="file" 
+								   class="form-control" 
+								   id="Profile_Image" 
+								   name="Profile_Image" 
+								   accept=".jpg,.jpeg,.png"
+								   required>
+							<div class="form-text">Allowed formats: JPG, JPEG, PNG</div>
+						</div>
+
+						<div class="text-center">
+							<button type="submit" name="submit" class="btn btn-primary">
+								Update Profile Picture
+							</button>
+							<a href="customer_profile.php" class="btn btn-outline-secondary ms-2">
+								Cancel
+							</a>
+						</div>
+					</form>
 				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center">
-					<div class="form-group d-flex align-items-center justify-content-center">
-						<!-- <label for="ProductImage" class="h6 text-center mt-5">Choose your picture </label> -->
-						<input type="file" name="Profile_Image" id="ProductImage" class="form-control w-75 mt-5">
-					</div>
-				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center">
-					<input type="submit" name="submit" value="Submit" class="btn btn-success my-4" />
-				</div>
-			</form>
-		</div>
+			</div>
+		</section>
 	</div>
 </div>
+
 <?php
 include 'footer.php';
 include 'end.php';

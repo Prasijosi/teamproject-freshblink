@@ -46,8 +46,8 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
     
                 include 'connection.php';
                             $to_email = "echo $temail";
-                $subject = "Welcome to goCart!";
-                $headers = "From: goCart  <josiprasi@gmail.com>";
+                $subject = "Welcome to FreshBlink!";
+                $headers = "From: FreshBlink  <josiprasi@gmail.com>";
                 $headers .= "MIME-Version: 1.0\r\n";
                 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
     
@@ -73,11 +73,11 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
     
                     <p>Thank you for contacting us to request approval of seller account</p>
     
-                    <p>We reviewed your account and the information you provided, and We have decided that you can now sell on goCart</p>
+                    <p>We reviewed your account and the information you provided, and We have decided that you can now sell on FreshBlink</p>
     
                     <p>To get started with your new account, please visit here! (http://localhost:8000/index.php) </p>
     
-                    <p>Enjoy selling products on goCart</p>
+                    <p>Enjoy selling products on FreshBlink</p>
 
                     <p style="display: flex; justify-content: center; margin-top: 10px;"><center>
 					<a href="http://localhost:8000/trader/sign_in_trader.php" target="_blank" style="border: 1px solid #0561B3; background-color: #238CEA; 
@@ -89,7 +89,7 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
                 </div>
     
                 <div id="footer" style="margin-bottom: 20px; padding: 0px 8px; text-align: center;">
-                    <a href="http://localhost:8000/index.php" target="_blank" style="text-decoration: none; color: #238CEA;">@goCart</a> 
+                    <a href="http://localhost:8000/index.php" target="_blank" style="text-decoration: none; color: #238CEA;">@FreshBlink</a> 
                 </div>
             </div>
         </body>
@@ -164,7 +164,7 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
             include 'connection.php';
                         $to_email = "echo $temail";
             $subject = "Account Scheduled for Deletion!";
-            $headers = "From: goCart  <josiprasi@gmail.com>";
+            $headers = "From: FreshBlink  <josiprasi@gmail.com>";
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
@@ -189,11 +189,11 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
 				
 				<p>Hi,</p>
 
-				<p>We understand that you would like to join our goCart Seller Community</p>
+				<p>We understand that you would like to join our FreshBlink Seller Community</p>
 
-				<p>But! We reviewed your account and the information you provided, and we decided that you may no longer sell on goCart</p>
+				<p>But! We reviewed your account and the information you provided, and we decided that you may no longer sell on FreshBlink</p>
 
-				<p>You can learn more about our terms and condition for Seller account here (https://goCart.com/terms-and-condition-seller) </p>
+				<p>You can learn more about our terms and condition for Seller account here (https://FreshBlink.com/terms-and-condition-seller) </p>
 
 				<p>We may not reply to futher emails about this issue.</p>
 
@@ -202,7 +202,7 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
 			</div>
 
 			<div id="footer" style="margin-bottom: 20px; padding: 0px 8px; text-align: center;">
-				<a href="http://localhost:8000/index.php" target="_blank" style="text-decoration: none; color: #238CEA;">@goCart</a> 
+				<a href="http://localhost:8000/index.php" target="_blank" style="text-decoration: none; color: #238CEA;">@FreshBlink</a> 
 			</div>
 		</div>
 	</body>

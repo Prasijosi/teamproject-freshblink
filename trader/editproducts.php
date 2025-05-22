@@ -67,63 +67,58 @@ if (isset($_POST['submit1'])) {
     }
 }
 ?>
-<div class="container">
+<div>
     <?php include 'theader.php'; ?>
     <div class="container w-100 d-flex align-items-center justify-content-center">
-        <div class="row mt-2">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-left mt-1">
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-left mt-1">
-                <form class="border p-5 mt-1 w-100" method="POST" action="editproducts.php?productID=<?php echo $productID ?>" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-left">
-                            <div class="h4 mt-3">Edit Product
-                                <h6 class="mt-3">Basic Information</h6>
+        <div class="row mt-4 w-100">
+            <div class="col-12">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <form class="p-4" method="POST" action="editproducts.php?productID=<?php echo $productID ?>" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 class="mb-4">Edit Product</h4>
+                                    <h6 class="text-muted mb-4">Basic Information</h6>
+                                </div>
                             </div>
-                        </div>
+                            <div class="form-group mb-3">
+                                <label for="shop_name" class="form-label">Shop Name</label>
+                                <input type="text" class="form-control" id="shop_name" placeholder="Shop Name" disabled="disabled" name="shop_name" value="<?php echo $shop_name ?>">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product_name" class="form-label">Product Name</label>
+                                <input type="hidden" class="form-control" id="product_id" placeholder="Product id" name="product_id" value="<?php echo $product_id ?>">
+                                <input type="text" class="form-control" id="product_name" placeholder="Product Name" name="product_name" value="<?php echo $product_name ?>">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product_category" class="form-label">Product Category</label>
+                                <input type="text" class="form-control" id="product_category" placeholder="Product Category" disabled="disabled" name="product_category" value="<?php echo $product_category ?>">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product_details" class="form-label">Product Details</label>
+                                <textarea class="form-control" id="product_details" rows="3" name="product_details"><?php echo $product_details ?></textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="product_price" class="form-label">Product Price</label>
+                                <input type="number" class="form-control" id="product_price" placeholder="Product Price" name="product_price" value="<?php echo $product_price ?>">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="stock" class="form-label">Stock</label>
+                                <input type="number" class="form-control" id="stock" placeholder="Stock" name="stock" value="<?php echo $stock ?>">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="product_image" class="form-label">Product Image</label>
+                                <input type="file" class="form-control" id="file" name="product_image" required value="<?php echo $product_image ?>">
+                            </div>
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-success px-5" name="submit1">Submit</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group mt-2">
-                        <label for="shop_name">Shop Name</label>
-                        <input type="text" class="form-control" id="shop_name" placeholder="Shop Name" disabled="disabled" name="shop_name" value="<?php echo $shop_name ?>">
-                    </div>
-                    <div class="form-group mt-1">
-                        <label for="product_name">Product Name</label>
-                        <input type="hidden" class="form-control" id="product_id" placeholder="Product id" name="product_id" value="<?php echo $product_id ?>">
-                        <input type="text" class="form-control" id="product_name" placeholder="Product Name" name="product_name" value="<?php echo $product_name ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="product_category">Product Category</label>
-                        <input type="text" class="form-control" id="product_category" placeholder="Product Category" disabled="disabled" name="product_category" value="<?php echo $product_category ?>">
-                    </div>
-                    <div class="form-group">
-                        <div class="my-3">
-                            <label for="product_details" class="form-label">Product Details</label>
-                            <textarea class="form-control" id="product_details" rows="3" name="product_details"><?php echo $product_details ?></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="product_price" class="form-label">Product Price</label>
-                            <input type="number" class="form-control" id="product_price" placeholder="Product Price" name="product_price" value="<?php echo $product_price ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="stock">Stock</label>
-                            <input type="number" class="form-control" id="stock" placeholder="Stock" name="stock" value="<?php echo $stock ?>">
-                        </div>
-                    </div>
-                    <div class="form-group mx-auto mt-2">
-                        <label for="product_image">Product Image</label>
-                        <br>
-                        <input type="file" id="file" name="product_image" required value="<?php echo $product_image ?>">
-                    </div>
-                    <br>
-                    <div class="form-group row">
-                        </br>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center ml-2">
-                            <button type="submit" class="btn btn-success" name="submit1">Submit</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <?php include '../end.php'; ?>
+<?php include '../footer.php'; ?>
