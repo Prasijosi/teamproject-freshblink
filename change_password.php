@@ -4,70 +4,74 @@ if (!isset($_SESSION['username'])) {
 }
 $profile_picture = $_SESSION['profile_picture'];
 ?>
-<div class="container">
+<div class="container mt-5">
 	<?php include 'header.php';
 	if (isset($_GET['msg'])) {
 		$msg = $_GET['msg'];
 		echo "<script type='text/javascript'>alert('" . $msg . "')</script>";
-	} else {
-		echo "";
 	}
 	?>
-	<div class="row mt-5">
-		<div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-4 mt-5">
-			<div class="row">
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-					<a href="#" class="d-flex align-items-center justify-content-center">
-						<img src="<?php echo $profile_picture ?>" class="img-fluid">
-					</a>
+	<div class="row">
+		<!-- Sidebar -->
+		<aside class="col-md-4 mb-4">
+			<div class="card shadow-sm">
+				<div class="card-header bg-light text-dark">
+					<h4 class="mb-0">My Account</h4>
 				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-2">
-					<a href="customer_profile_picture.php" class="d-flex align-items-center justify-content-center h6">
+				<div class="card-body text-center">
+					<div class="mb-3">
+						<img src="<?php echo $profile_picture ?>" 
+							 alt="Profile Picture" 
+							 class="img-thumbnail rounded-circle"
+							 style="width: 180px; height: 180px; object-fit: cover;">
+					</div>
+					<a href="customer_profile_picture.php" class="btn btn-outline-secondary btn-sm">
 						Change Profile Picture
 					</a>
 				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-start mt-4 h3">
-					My Account
-				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-start h5 mt-2">
-					<a href="customer_profile.php" class="display-5">Dashboard</a>
-				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-start h5 mt-2">
-					<a href="orders.php" class="display-5">Orders</a>
-				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-start h5 mt-2">
-					<a href="#" class="display-5">Product Reviews</a>
+				<div class="list-group list-group-flush">
+					<a href="customer_profile.php" class="list-group-item list-group-item-action">Dashboard</a>
+					<a href="orders.php" class="list-group-item list-group-item-action">Orders</a>
+					<a href="reviews.php" class="list-group-item list-group-item-action">Product Reviews</a>
 				</div>
 			</div>
-		</div>
-		<div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 p-4 mt-5 border">
-			<div class="row">
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center h4">
-					Change your Password
+		</aside>
+
+		<!-- Main Content -->
+		<section class="col-md-8">
+			<div class="card shadow-sm">
+				<div class="card-header bg-light text-dark">
+					<h4 class="mb-0">Change Password</h4>
 				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center">
-					<form class="mt-2" method="POST" action="change_password_process.php">
-						<div class="form-group row">
-							<label for="inputPassword" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-form-label">Password</label>
-							<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-								<input type="password" class="form-control" id="inputPassword" placeholder="Enter your Password" name="password">
-							</div>
+				<div class="card-body">
+					<form method="POST" action="change_password_process.php">
+						<div class="form-group mb-3">
+							<label for="inputPassword" class="form-label">New Password</label>
+							<input type="password" 
+								   class="form-control" 
+								   id="inputPassword" 
+								   placeholder="Enter your new password" 
+								   name="password"
+								   required>
 						</div>
-						<div class="form-group row">
-							<label for="inputPassword1" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-form-label">Confirm your Password</label>
-							<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-								<input type="password" class="form-control" id="inputPassword1" placeholder="Re-enter your Password" name="repassword">
-							</div>
+						<div class="form-group mb-4">
+							<label for="inputPassword1" class="form-label">Confirm New Password</label>
+							<input type="password" 
+								   class="form-control" 
+								   id="inputPassword1" 
+								   placeholder="Re-enter your new password" 
+								   name="repassword"
+								   required>
 						</div>
-						<div class="form-group row">
-							<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center ml-2">
-								<button type="submit" class="btn btn-success" name="submit">Save Changes</button>
-							</div>
+						<div class="text-center">
+							<button type="submit" class="btn btn-success" name="submit">
+								Save Changes
+							</button>
 						</div>
 					</form>
 				</div>
 			</div>
-		</div>
+		</section>
 	</div>
 </div>
 <?php include 'footer.php';
