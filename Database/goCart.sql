@@ -1,443 +1,342 @@
-DROP TABLE Admin CASCADE CONSTRAINTS;
-CREATE TABLE Admin (
-  Admin_Id  integer NOT NULL,
-  Username varchar2(25) NOT NULL,
-  Password varchar2(15) NOT NULL,
-  Profile_Image varchar2(200)  NULL,
-  Email varchar2(100) NOT NULL,
-  CONSTRAINT Admin_PK PRIMARY KEY (Admin_Id),
-  CONSTRAINT Admin__UK UNIQUE (Username)
+-- CLEANUP: DROP TABLES AND SEQUENCES
+DROP TABLE wishlist_product CASCADE CONSTRAINTS;
+DROP TABLE cart_product CASCADE CONSTRAINTS;
+DROP TABLE order_product CASCADE CONSTRAINTS;
+DROP TABLE discount CASCADE CONSTRAINTS;
+DROP TABLE invoice CASCADE CONSTRAINTS;
+DROP TABLE payment CASCADE CONSTRAINTS;
+DROP TABLE orders CASCADE CONSTRAINTS;
+DROP TABLE collection_slot CASCADE CONSTRAINTS;
+DROP TABLE cart CASCADE CONSTRAINTS;
+DROP TABLE wishlist CASCADE CONSTRAINTS;
+DROP TABLE review CASCADE CONSTRAINTS;
+DROP TABLE product CASCADE CONSTRAINTS;
+DROP TABLE report CASCADE CONSTRAINTS;
+DROP TABLE product_category CASCADE CONSTRAINTS;
+DROP TABLE shop CASCADE CONSTRAINTS;
+DROP TABLE admin CASCADE CONSTRAINTS;
+DROP TABLE trader CASCADE CONSTRAINTS;
+DROP TABLE customer CASCADE CONSTRAINTS;
+DROP TABLE users CASCADE CONSTRAINTS;
+
+--Drop Sequence
+DROP SEQUENCE seq_user_id;
+DROP SEQUENCE seq_shop_id;
+DROP SEQUENCE seq_product_category_id;
+DROP SEQUENCE seq_product_id;
+DROP SEQUENCE seq_review_id;
+DROP SEQUENCE seq_wishlist_id;
+DROP SEQUENCE seq_cart_id;
+DROP SEQUENCE seq_order_id;
+DROP SEQUENCE seq_payment_id;
+DROP SEQUENCE seq_invoice_id;
+DROP SEQUENCE seq_discount_id;
+DROP SEQUENCE seq_report_id;
+DROP SEQUENCE seq_slot_id;
+
+-- DROP SEQUENCES
+CREATE SEQUENCE seq_cart_id START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_discount_id START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_invoice_id START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_order_id START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_payment_id START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_product_category_id START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_product_id START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_report_id START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_review_id START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_shop_id START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_slot_id START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_user_id START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_wishlist_id START WITH 1 INCREMENT BY 1;
+
+-- CREATE TABLES
+CREATE TABLE users (
+    user_id NUMBER PRIMARY KEY,
+    user_name VARCHAR2(100) NOT NULL,
+    date_of_birth DATE,
+    contact_details VARCHAR2(100),
+    email VARCHAR2(100) UNIQUE NOT NULL,
+    password VARCHAR2(100) NOT NULL,
+    address VARCHAR2(255),
+    user_role VARCHAR2(20) CHECK (user_role IN ('admin', 'trader', 'customer')) NOT NULL
 );
 
-
-DROP TABLE Customer CASCADE CONSTRAINTS;
-CREATE TABLE Customer (
-  Customer_ID integer NOT NULL ,
-  Full_Name varchar2(40) NOT NULL,
-  Username varchar2(15) NOT NULL,
-  Password varchar2(255) NOT NULL,
-  Email varchar2(25) NOT NULL,
-  Address varchar2(20) NOT NULL,
-  Date_Of_Birth varchar2(20) NOT  NULL,
-  Contact_number varchar2(10) NOT NULL,
-  Sex varchar2(10) NOT NULL,
-  Profile_Image varchar2(255)  NULL,
-  Email_Verify integer  NULL,
-  CONSTRAINT Customer_PK PRIMARY KEY (Customer_Id),
-  CONSTRAINT Customer__UK UNIQUE (Username)
-) ;
-
-
-DROP TABLE Trader CASCADE CONSTRAINTS;
-CREATE TABLE Trader (
-  Trader_Id integer NOT NULL,
-  Name varchar2(50) NOT NULL,
-  Username varchar2(50) NOT NULL,
-  Password varchar2(35) NOT NULL,
-  Contact varchar2(10)  NULL,
-  Email varchar2(255) NOT NULL,
-  Profile_Image varchar(200)  NULL,
-  Trader_Verification integer  NULL,
-  CONSTRAINT Trader_PK PRIMARY KEY (Trader_Id),
-  CONSTRAINT Trader__UK UNIQUE (Username)
+CREATE TABLE admin (
+    user_id NUMBER PRIMARY KEY,
+    admin_id VARCHAR2(30) UNIQUE,
+    admin_type VARCHAR2(30),
+    contact_number VARCHAR2(15),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-
-
-DROP TABLE Discount CASCADE CONSTRAINTS;
-CREATE TABLE Discount (
-  Discount float NOT NULL,
-  Customer_Id integer NOT NULL REFERENCES Customer(Customer_Id),
-  Product_Id integer NOT NULL  REFERENCES Product(Product_Id)
+CREATE TABLE trader (
+    user_id NUMBER PRIMARY KEY,
+    trader_id VARCHAR2(30) UNIQUE,
+    trader_type VARCHAR2(50),
+    trader_status VARCHAR2(20),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-DROP TABLE Cart CASCADE CONSTRAINTS;
-CREATE TABLE Cart (
-  Cart_Id integer NOT NULL,
-  Total_Price float NOT NULL,
-  Customer_Id integer NOT NULL REFERENCES Customer(Customer_Id),
-  Product_Id integer NOT NULL  REFERENCES Product(Product_Id),
-  CONSTRAINT Cart_PK PRIMARY KEY (Cart_Id)
+CREATE TABLE customer (
+    user_id NUMBER PRIMARY KEY,
+    customer_id VARCHAR2(30) UNIQUE,
+    contact_number VARCHAR2(15),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-DROP TABLE Orders CASCADE CONSTRAINTS;
-CREATE TABLE Orders (
-  Order_Id integer NOT NULL,
-  Order_Date date NOT NULL,
-  Quantity integer NOT NULL,
-  Order_price float NOT NULL,
-   Customer_Id integer NOT NULL REFERENCES Customer(Customer_Id),
-  Product_Id integer NOT NULL  REFERENCES Product(Product_Id),
-  Delivery_Status integer NULL,
-  CONSTRAINT Order_PK PRIMARY KEY (Order_Id)
-    
+CREATE TABLE shop (
+    shop_id NUMBER PRIMARY KEY,
+    trader_id NUMBER,
+    shop_name VARCHAR2(100),
+    description VARCHAR2(255),
+    location VARCHAR2(100),
+    email VARCHAR2(100),
+    created_at DATE DEFAULT SYSDATE,
+    FOREIGN KEY (trader_id) REFERENCES trader(user_id)
 );
 
-
-DROP TABLE Payment;
-CREATE TABLE Payment (
-  Payment_Id varchar2(50) NOT NULL,
-  Payment_type varchar2(255) NOT NULL,
-  Total_Payment float NOT NULL,
-  Customer_Id integer NOT NULL,
-  Order_Id integer NOT NULL 
+CREATE TABLE product_category (
+    product_category_id NUMBER PRIMARY KEY,
+    parent_category_id NUMBER,
+    product_name VARCHAR2(100),
+    created_on DATE DEFAULT SYSDATE,
+    updated_on DATE,
+    FOREIGN KEY (parent_category_id) REFERENCES product_category(product_category_id)
 );
 
-
-
-DROP TABLE Product CASCADE CONSTRAINTS;
-CREATE TABLE Product (
-  Product_Id integer NOT NULL,
-  Product_Type varchar2(20) NOT NULL,
-  Product_Name varchar2(100) NOT NULL,
-  Product_Price float NOT NULL,
-  Product_Details varchar2(300) NOT NULL,
-  Stock integer NOT NULL,
-  Product_Image varchar2(200) NOT NULL,
-  Shop_Id integer NOT NULL REFERENCES Shop(Shop_Id),
-  Product_Verification integer NULL,
-  CONSTRAINT Product_PK PRIMARY KEY (Product_Id)
- );
-
-
-
-DROP TABLE Review CASCADE CONSTRAINTS;
-CREATE TABLE Review (
-  Review_Id integer NOT NULL,
-  Rating integer NOT NULL,
-  Description varchar2(300) NOT NULL,
-   Customer_Id integer NOT NULL REFERENCES Customer(Customer_Id),
-  Product_Id integer NOT NULL  REFERENCES Product(Product_Id),
-  Dates date DEFAULT NULL,
-  Review_Status integer NULL,
-  CONSTRAINT Review_PK PRIMARY KEY (Review_Id)
- 
-) ;
-
-
-
-
-DROP TABLE Shop CASCADE CONSTRAINTS;
-CREATE TABLE Shop (
-  Shop_Id integer NOT NULL,
-  Shop_Name varchar2(20) NOT NULL,
-  Shop_description varchar2(200) NOT NULL,
-  Shop_location varchar2(20) NOT NULL,
-  Trader_id integer NOT NULL REFERENCES Trader(Trader_id),
-  Shop_Verification integer  NULL,
-  CONSTRAINT Shop_PK PRIMARY KEY (Shop_Id)
+CREATE TABLE product (
+    product_id NUMBER PRIMARY KEY,
+    shop_id NUMBER,
+    product_category_id NUMBER,
+    product_name VARCHAR2(100),
+    description VARCHAR2(255),
+    price NUMBER(10,2),
+    brand VARCHAR2(50),
+    stock NUMBER,
+    allergy_info VARCHAR2(255),
+    image_url VARCHAR2(255),
+    min_order NUMBER DEFAULT 1,
+    max_order NUMBER,
+    created_on DATE DEFAULT SYSDATE,
+    updated_on DATE,
+    FOREIGN KEY (shop_id) REFERENCES shop(shop_id),
+    FOREIGN KEY (product_category_id) REFERENCES product_category(product_category_id)
 );
 
-
-DROP TABLE Time_Slot CASCADE CONSTRAINTS;
-CREATE TABLE Time_Slot (
-  Time_Slot_Id integer NOT NULL,
-  Time_Slot_Date varchar2(50) NOT NULL,
-  Time_Slot_Time varchar2(20) NOT NULL,
-  Order_Id integer NOT NULL REFERENCES Orders(Order_id),
-  Customer_Id Integer NOT NULL REFERENCES Customer(Customer_id),
- CONSTRAINT Time_Slot_PK PRIMARY KEY (Time_Slot_Id)
-) ;
-
-
-
-
-----Sequences
-DROP SEQUENCE Admin_Id_seq;
-CREATE SEQUENCE Admin_Id_seq
- START WITH     5100
-MINVALUE 5100
-MAXVALUE 999999999999999999
- INCREMENT BY   1
- NOCACHE
- NOCYCLE;
- 
-
-DROP SEQUENCE Customer_Id_seq;
-CREATE SEQUENCE Customer_Id_seq
- START WITH     3100
-MINVALUE 3100
-MAXVALUE 999999999999999999
- INCREMENT BY   1
- NOCACHE
- NOCYCLE;
- 
-DROP SEQUENCE Trader_Id_seq;
-CREATE SEQUENCE Trader_Id_seq
- START WITH     4100
-MINVALUE 4100
-MAXVALUE 999999999999999999
- INCREMENT BY   1
- NOCACHE
- NOCYCLE;
- 
- DROP SEQUENCE Cart_Id_seq;
-CREATE SEQUENCE Cart_Id_seq
- START WITH     2100
-MINVALUE 2100
-MAXVALUE 999999999999999999
- INCREMENT BY   1
- NOCACHE
- NOCYCLE;
- 
- DROP SEQUENCE Order_Id_seq;
-CREATE SEQUENCE Order_Id_seq
- START WITH     7100
-MINVALUE 7100
-MAXVALUE 999999999999999999
- INCREMENT BY   1
- NOCACHE
- NOCYCLE;
- 
-DROP SEQUENCE Product_Id_seq;
-CREATE SEQUENCE Product_Id_seq
- START WITH     1100
-MINVALUE 1100
-MAXVALUE 999999999999999999
- INCREMENT BY   1
- NOCACHE
- NOCYCLE;
- 
- 
-DROP SEQUENCE Review_Id_seq;
-CREATE SEQUENCE Review_Id_seq
- START WITH     9001
-MINVALUE 9001
-MAXVALUE 999999999999999999
- INCREMENT BY   1
- NOCACHE
- NOCYCLE;
- 
- 
-DROP SEQUENCE Shop_Id_seq;
-CREATE SEQUENCE Shop_Id_seq
- START WITH     6015
-MINVALUE 6015
-MAXVALUE 999999999999999999
- INCREMENT BY   1
- NOCACHE
- NOCYCLE;
- 
- 
-DROP SEQUENCE Time_Slot_Id_seq;
-CREATE SEQUENCE Time_Slot_Id_seq
- START WITH     110
-MINVALUE 110
-MAXVALUE 999999999999999999
- INCREMENT BY   1
- NOCACHE
- NOCYCLE;
-
- 
- 
- ------Admin
-INSERT INTO Admin (Admin_Id, Username, Password, Email) VALUES (5001, 'abitmahato712', 'Az@12345?','abit@gmail.com');
-INSERT INTO Admin (Admin_Id, Username, Password, Email) VALUES (5002, 'Joshipratish12', 'Az@12345?','pratishjoshi07@gmail.com');
-
-
-------Trader
-INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification) VALUES
-(4001, 'Jack Morris', 'JackMorris756', 'Az@12345?', '9802365421', 'jackmorris756@gmail.com', '', 1);
-
-INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification) VALUES
-(4002, 'Tim Hilton', 'timhilton31', 'Az@12345?', '9802365422', 'timhilton31@gmail.com', '', 1);
-
-INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification) VALUES
-(4003, 'Jimmy Chu', 'jimmychu236', 'Az@12345?', '9802365423', 'jimmychu236@gmail.com', '', 1);
-
-INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification) VALUES
-(4004, 'Kamala Harris', 'kamala54', 'Az@12345?', '9802365424', 'kamala54@gmail.com', '', 1);
-
-INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification) VALUES
-(4005, 'Tom Hardy', 'hardytom69', 'Az@12345?', '9802365425', 'hardytom69@gmail.com', '', 1);
-
-INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification) VALUES
-(4007, 'Pratish Joshi', 'Pratish', 'Azeeta@1', '9860802472', 'joshipratish12@gmail.com', '', 1);
-
---
-
-
-------Customer
-
-INSERT INTO Customer (Customer_Id,Full_Name,Username,Password,Email,Address,Date_Of_Birth,Contact_Number,Sex,Profile_Image,Email_Verify)VALUES
-(3001, 'Abit Kumar Mahato', 'abitmahato712', 'Az@12345?', 'abitmahato712@gmail.com', 'Sukhipur,Siraha', '07/02/2021', '9808079576', 'Male', '', 0);
-
-INSERT INTO Customer (Customer_Id,Full_Name,Username,Password,Email,Address,Date_Of_Birth,Contact_Number,Sex,Profile_Image,Email_Verify)VALUES
-(3002, 'Pratish Joshi', 'joshipratish12', 'Azeeta@1', 'joshipratish12@gmail.com', 'Kathmandu', '06/02/2021', '9808079576', 'Male', 'images/customer/driving license.jpg', 0);
-
-INSERT INTO Customer (Customer_Id,Full_Name,Username,Password,Email,Address,Date_Of_Birth,Contact_Number,Sex,Profile_Image,Email_Verify)VALUES
-(3003, 'Apil Parajuli', 'parajuliapil105', 'Az@12345?', 'parajuliapil1056@gmail.co', 'Kathmandu', '05/02/2021', '980563978', 'Male', 'images/customer/Screenshot (17).png', 0);
-
-INSERT INTO Customer (Customer_Id,Full_Name,Username,Password,Email,Address,Date_Of_Birth,Contact_Number,Sex,Profile_Image,Email_Verify)VALUES
-(3004, 'Bibek Maharjan', 'bibekmaharjan71', 'Az@12345?', 'bibekmaharjan712@gmail.co', 'Lalitpur', '04/02/2021', '9856321458', 'Male', '', 0);
-
-INSERT INTO Customer (Customer_Id,Full_Name,Username,Password,Email,Address,Date_Of_Birth,Contact_Number,Sex,Profile_Image,Email_Verify)VALUES
-(3005, 'Bibek Shah', 'bibekshah256', 'Az@12345?', 'bibekshah256@gmail.com', 'Biratnagar', '03/02/2021', '9802366541', 'Male', '', 0);
-
-INSERT INTO Customer (Customer_Id,Full_Name,Username,Password,Email,Address,Date_Of_Birth,Contact_Number,Sex,Profile_Image,Email_Verify)VALUES
-(3023, 'ben', 'ben', 'Az@12345?', 'ben@gmail.com', 'ben', '10/12/2020', '9832651235', 'Female', '', 0);
-
-INSERT INTO Customer (Customer_Id,Full_Name,Username,Password,Email,Address,Date_Of_Birth,Contact_Number,Sex,Profile_Image,Email_Verify)VALUES
-(3024, 'krishna ', 'krishna ', 'Az@12345?', 'krishna@gmail.com', 'krishna ', '10/08/2003', ' ', 'Female', '', 0);
-
-INSERT INTO Customer (Customer_Id,Full_Name,Username,Password,Email,Address,Date_Of_Birth,Contact_Number,Sex,Profile_Image,Email_Verify)VALUES
-(3066, 'Sukuna Reaper', 'Sukuna', 'Sukuna@12', 'joshipratish997@gmail.com', 'Akron', '07/25/2006', '9860802472', 'Male', '', 0);
-
-
-
------Shop
-INSERT INTO Shop (Shop_Id, Shop_Name, Shop_description, Shop_location, Trader_id, Shop_Verification) VALUES
-(6001, 'Butcher', 'We supply varities of fresh and healthy meat,steak', 'Cleckhuddersfax', 4001, 1);
-
-INSERT INTO Shop (Shop_Id, Shop_Name, Shop_description, Shop_location, Trader_id, Shop_Verification) VALUES
-(6003, 'Greengrocer', 'We have varities of vegetable and fruits', 'Cleckhuddersfax', 4004, 1);
-
-INSERT INTO Shop (Shop_Id, Shop_Name, Shop_description, Shop_location, Trader_id, Shop_Verification) VALUES
-(6002, 'Fishmonger', 'We supply different types of frozen and alive fish', 'Cleckhuddersfax', 4003, 1);
-
-INSERT INTO Shop (Shop_Id, Shop_Name, Shop_description, Shop_location, Trader_id, Shop_Verification) VALUES
-(6004, 'Bakery', 'We supply cakes,cookies,bread and many more', 'Cleckhuddersfax', 4002, 1);
-
-INSERT INTO Shop (Shop_Id, Shop_Name, Shop_description, Shop_location, Trader_id, Shop_Verification) VALUES
-(6005, 'Delicatessen', 'We sell cooked meat,salad,nachos,cheese and manymo', 'Cleckhuddersfax', 4005, 1);
-
-INSERT INTO Shop (Shop_Id, Shop_Name, Shop_description, Shop_location, Trader_id, Shop_Verification) VALUES
-(6010, 'AcE', '                             Beauty           ', 'Cleckhuddersfax', 4007, 1);
-
-
------Product
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1001, 'Bakery', 'Cake', 800, 'One pound of healthy and delicious black forest cake. Its allergic to diabetes patient', 0, 'images/bakery_03.png', 6004, 1);
-
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1002, 'Bakery', 'Donught', 50, 'A cream filled donught.Its allergic to diabetes pateint', 4, 'images/bakery_04.png', 6004, 1);
-
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1003, 'Bakery', 'Wholegrain Bread', 80, 'Whole grain bread enriched with fibres and vitamins.Not allergic to anyone', 8, 'images/bakery_01.png', 6004, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1004, 'Bakery', 'Cookies', 100, 'Cookies made up of wheat and oats. Easy to digest and non allergic', 18, 'images/bakery_02.png', 6004, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1005, 'Butcher', 'Mutton', 1300, 'Pack of a kg of fresh chopped mutton.Allergic to people with cholestrol', 10, 'images/butcher_02.png', 6001, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1006, 'Butcher', 'Chicken', 300, 'Freshly cut chicken per kg.Non allergic', 8, 'images/butcher_03.png', 6001, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1007, 'Butcher', 'Pork', 500, 'Freshly cut local pig per kg.Non allergic', 5, 'images/butcher_01.png', 6001, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1008, 'Butcher', 'Buff meat', 400, 'One kg of fresh and clean buff meat.Allergic to cholestrol', 17, 'images/butcher_04.png', 6001, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1009, 'Greengrocery', 'Brocolli', 80, 'Green and fresh local brocoli enriched in fibres and vitamins.Non allergic', 10, 'images/greengrocery_01.png', 6003, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1010, 'Greengrocery', 'Spinach', 80, 'Fresh and multipurpose spinach. Can be used as veggies,salad.Non allergic', 10, 'images/greengrocery_02.png', 6003, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1011, 'Greengrocery', 'Apple', 250, 'Fresh and tasty fuji apples per kg.Non allergic', 10, 'images/greengrocery_03.png', 6003, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1012, 'Greengrocery', 'Avocado', 350, 'Avocado is a very nutritious fruit and can be consumed by ages of all people. Packet consists of half kg.Consumable by all ,non allergic', 5, 'images/greengrocery_04.png', 6003, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1013, 'Fishmonger', 'Rohu fish', 500, 'Fresh fish brought from local ponds and lakes.Shelfish allergic', 10, 'images/fishmonger_01.png', 6002, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1014, 'Fishmonger', 'Cat Fish', 800, 'Fish found very rare in local areas, especially found in sea areas.Shelfish allergic', 4, 'images/fishmonger_02.png', 6002, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1015, 'Fishmonger', 'Prawn', 300, 'Prawns can be used in various ways. It can be transformed into chips also.Shelfish allergic', 3, 'images/fishmonger_03.png', 6002, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1016, 'Fishmonger', 'Crab', 400, 'Special crabs only found in seas and oceans.As allergic as seafoods', 2, 'images/fishmonger_04.png', 6002, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1017, 'Delicatesssen', 'Steaks', 200, 'Frozen steaks can be fried and used instantly in snacks or anytime.Not allergic', 2, 'images/delicatessen_01.png', 6005, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1018, 'Delicatesssen', 'Cheese', 200, 'Multipurpose mozzirella Cheese made up of fresh cow milk. Consists half kg in a packet.Allergic to lactose intolerant', 6, 'images/delicatessen_02.png', 6005, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1019, 'Delicatesssen', 'Hotdog', 150, 'Fresh hot dogs stuffed with cheese, veggies, meat and sauces.Non allergic', 15, 'images/delicatessen_03.png', 6005, 1);
-
-INSERT INTO Product (Product_Id, Product_Type, Product_Name, Product_Price, Product_Details, Stock, Product_Image, Shop_Id, Product_Verification) VALUES
-(1020, 'Delicatesssen', 'Sausage', 300, 'Chicken and buff sausages. Fry and enjoy it within no time.Non allergic', 15, 'images/delicatessen_04.png', 6005, 1);
-
-
-
------------Order
-
-INSERT INTO Orders (Order_Id, Order_Date, Quantity, Order_price, Customer_Id, Product_Id, Delivery_Status) VALUES
-(7001, '06-05-2021', 1, 50, 3023, 1002, 0);
-
-
-INSERT INTO Orders (Order_Id, Order_Date, Quantity, Order_price, Customer_Id, Product_Id, Delivery_Status) VALUES
-(7002, '06-05-2021', 1, 80, 3023, 1003, 0);
-
-INSERT INTO Orders (Order_Id, Order_Date, Quantity, Order_price, Customer_Id, Product_Id, Delivery_Status) VALUES
-(7003, '06-05-2021', 18, 7200, 3002, 1016, 1);
-
-INSERT INTO Orders (Order_Id, Order_Date, Quantity, Order_price, Customer_Id, Product_Id, Delivery_Status) VALUES
-(7004, '06-05-2021', 1, 80, 3002, 1003, 0);
-
-INSERT INTO Orders (Order_Id, Order_Date, Quantity, Order_price, Customer_Id, Product_Id, Delivery_Status) VALUES
-(7005, '06-05-2021', 1, 80, 3002, 1003, 0);
-
-INSERT INTO Orders (Order_Id, Order_Date, Quantity, Order_price, Customer_Id, Product_Id, Delivery_Status) VALUES
-(7006, '06-05-2021', 1, 1300, 3002, 1005, 1);
-
-INSERT INTO Orders (Order_Id, Order_Date, Quantity, Order_price, Customer_Id, Product_Id, Delivery_Status) VALUES
-(7007, '06-05-2021', 1, 80, 3002, 1003, 0);
-
-INSERT INTO Orders (Order_Id, Order_Date, Quantity, Order_price, Customer_Id, Product_Id, Delivery_Status) VALUES
-(7008, '06-05-2021', 1, 80, 3066, 1003, 0);
-
-
-INSERT INTO Orders (Order_Id, Order_Date, Quantity, Order_price, Customer_Id, Product_Id, Delivery_Status) VALUES
-(7009, '06-05-2021', 2, 600, 3066, 1006, 0);
-
-
-----Cart
-INSERT INTO Cart (Cart_Id, Total_Price, Customer_Id, Product_Id) VALUES
-(2001, 1, 3066, 1015);
-
-
-INSERT INTO Cart (Cart_Id, Total_Price, Customer_Id, Product_Id) VALUES
-(2002, 1, 3066, 1015);
-
-INSERT INTO Cart (Cart_Id, Total_Price, Customer_Id, Product_Id) VALUES
-(2003, 1, 3066, 1008);
-
-INSERT INTO Cart (Cart_Id, Total_Price, Customer_Id, Product_Id) VALUES
-(2004, 2, 3066, 1004);
-
-INSERT INTO Cart (Cart_Id, Total_Price, Customer_Id, Product_Id) VALUES
-(2005, 2, 3066, 1004);
-
-INSERT INTO Cart (Cart_Id, Total_Price, Customer_Id, Product_Id) VALUES
-(2006, 1, 3066, 1006);
-
-
-----Review
-
-
-INSERT INTO Review (Review_Id, Rating, Description, Customer_Id, Product_Id, Dates, Review_Status) VALUES
-(1, 1, 'this product is trash.', 3004, 1001, '06-02-2021', 1);
-
-INSERT INTO Review (Review_Id, Rating, Description, Customer_Id, Product_Id, Dates, Review_Status) VALUES
-(2, 4, 'I love this product.', 3002, 1001, '06-12-2021', 1);
-
-INSERT INTO Review (Review_Id, Rating, Description, Customer_Id, Product_Id, Dates, Review_Status) VALUES
-(8, 5, 'This is super delicious and of high quality. :D', 3066, 1002, '07-01-2021', 0);
-
-INSERT INTO Review (Review_Id, Rating, Description, Customer_Id, Product_Id, Dates, Review_Status) VALUES
-(16, 5, 'The Bread was really Fresh and Soft. I loved it. Will be ordering more of these. <3', 3066, 1003, '07-01-2021', 0);
+CREATE TABLE discount (
+    discount_id NUMBER PRIMARY KEY,
+    product_id NUMBER,
+    discount_percent NUMBER(5,2),
+    start_date DATE,
+    end_date DATE,
+    FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+
+CREATE TABLE review (
+    review_id NUMBER PRIMARY KEY,
+    customer_id NUMBER,
+    product_id NUMBER,
+    rating NUMBER CHECK (rating BETWEEN 1 AND 5),
+    coment VARCHAR2(500),
+    review_date DATE DEFAULT SYSDATE,
+    FOREIGN KEY (customer_id) REFERENCES customer(user_id),
+    FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+
+CREATE TABLE wishlist (
+    wishlist_id NUMBER PRIMARY KEY,
+    user_id NUMBER,
+    created_on DATE DEFAULT SYSDATE,
+    FOREIGN KEY (user_id) REFERENCES customer(user_id)
+);
+
+CREATE TABLE wishlist_product (
+    wishlist_id NUMBER,
+    product_id NUMBER,
+    PRIMARY KEY (wishlist_id, product_id),
+    FOREIGN KEY (wishlist_id) REFERENCES wishlist(wishlist_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE
+);
+
+CREATE TABLE cart (
+    cart_id NUMBER PRIMARY KEY,
+    user_id NUMBER UNIQUE,
+    created_on DATE DEFAULT SYSDATE,
+    FOREIGN KEY (user_id) REFERENCES customer(user_id)
+);
+
+CREATE TABLE cart_product (
+    cart_id NUMBER,
+    product_id NUMBER,
+    quantity NUMBER,
+    PRIMARY KEY (cart_id, product_id),
+    FOREIGN KEY (cart_id) REFERENCES cart(cart_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE
+);
+
+CREATE TABLE collection_slot (
+    collection_slot_id NUMBER PRIMARY KEY,
+    slot_day VARCHAR2(20),
+    slot_time VARCHAR2(20),
+    max_orders NUMBER DEFAULT 20,
+    current_orders NUMBER DEFAULT 0
+);
+
+CREATE TABLE orders (
+    order_id NUMBER PRIMARY KEY,
+    cart_id NUMBER,
+    user_id NUMBER,
+    no_of_products NUMBER,
+    total_cost NUMBER(10,2),
+    collection_slot_id NUMBER,
+    order_date DATE DEFAULT SYSDATE,
+    FOREIGN KEY (cart_id) REFERENCES cart(cart_id),
+    FOREIGN KEY (user_id) REFERENCES customer(user_id),
+    FOREIGN KEY (collection_slot_id) REFERENCES collection_slot(collection_slot_id)
+);
+
+CREATE TABLE order_product (
+    order_id NUMBER,
+    product_id NUMBER,
+    quantity NUMBER,
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+
+CREATE TABLE payment (
+    payment_id NUMBER PRIMARY KEY,
+    order_id NUMBER,
+    amount NUMBER(10,2),
+    payment_method VARCHAR2(50),
+    payment_status VARCHAR2(20),
+    payment_date DATE DEFAULT SYSDATE,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+
+CREATE TABLE invoice (
+    invoice_id NUMBER PRIMARY KEY,
+    order_id NUMBER,
+    issued_on DATE DEFAULT SYSDATE,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+
+CREATE TABLE report (
+    report_id NUMBER PRIMARY KEY,
+    user_id NUMBER,
+    order_id NUMBER,
+    report_type VARCHAR2(50),
+    description VARCHAR2(500),
+    report_date DATE DEFAULT SYSDATE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+
+-- INSERT SAMPLE DATA
+-- Insert sample users
+INSERT INTO users (user_name, date_of_birth, contact_details, email, password, address, user_role) 
+VALUES ('admin1', TO_DATE('1990-01-01', 'YYYY-MM-DD'), '1234567890', 'admin@example.com', 'admin123', 'Admin Address', 'admin');
+
+INSERT INTO users (user_name, date_of_birth, contact_details, email, password, address, user_role) 
+VALUES ('trader1', TO_DATE('1991-02-02', 'YYYY-MM-DD'), '2345678901', 'trader@example.com', 'trader123', 'Trader Address', 'trader');
+
+INSERT INTO users (user_name, date_of_birth, contact_details, email, password, address, user_role) 
+VALUES ('customer1', TO_DATE('1992-03-03', 'YYYY-MM-DD'), '3456789012', 'customer@example.com', 'customer123', 'Customer Address', 'customer');
+
+-- Insert sample admin
+INSERT INTO admin (user_id, admin_id, admin_type, contact_number)
+SELECT user_id, 'ADM001', 'Super Admin', '1234567890'
+FROM users WHERE user_name = 'admin1';
+
+-- Insert sample trader
+INSERT INTO trader (user_id, trader_id, trader_type, trader_status)
+SELECT user_id, 'TRD001', 'Premium', 'Active'
+FROM users WHERE user_name = 'trader1';
+
+-- Insert sample customer
+INSERT INTO customer (user_id, customer_id, contact_number)
+SELECT user_id, 'CUST001', '3456789012'
+FROM users WHERE user_name = 'customer1';
+
+-- Insert sample shop
+INSERT INTO shop (trader_id, shop_name, description, location, email)
+SELECT user_id, 'Fresh Foods', 'Fresh and Organic Foods', 'Kathmandu', 'shop@example.com'
+FROM users WHERE user_name = 'trader1';
+
+-- Insert sample product categories
+INSERT INTO product_category (product_name) VALUES ('Fruits');
+INSERT INTO product_category (product_name) VALUES ('Vegetables');
+INSERT INTO product_category (product_name) VALUES ('Dairy');
+
+-- Insert sample products
+INSERT INTO product (shop_id, product_category_id, product_name, description, price, brand, stock, allergy_info, image_url, min_order, max_order)
+SELECT 
+    s.shop_id,
+    pc.product_category_id,
+    'Organic Apples',
+    'Fresh Organic Apples',
+    2.99,
+    'Organic Farms',
+    100,
+    'None',
+    'images/apples.jpg',
+    1,
+    10
+FROM shop s, product_category pc 
+WHERE s.shop_name = 'Fresh Foods' AND pc.product_name = 'Fruits';
+
+INSERT INTO product (shop_id, product_category_id, product_name, description, price, brand, stock, allergy_info, image_url, min_order, max_order)
+SELECT 
+    s.shop_id,
+    pc.product_category_id,
+    'Fresh Milk',
+    'Organic Fresh Milk',
+    3.99,
+    'Dairy Farms',
+    50,
+    'Lactose',
+    'images/milk.jpg',
+    1,
+    5
+FROM shop s, product_category pc 
+WHERE s.shop_name = 'Fresh Foods' AND pc.product_name = 'Dairy';
+
+-- Insert sample collection slots
+INSERT INTO collection_slot (slot_day, slot_time, max_orders, current_orders)
+VALUES ('Monday', '10:00-13:00', 20, 0);
+
+INSERT INTO collection_slot (slot_day, slot_time, max_orders, current_orders)
+VALUES ('Monday', '13:00-16:00', 20, 0);
+
+INSERT INTO collection_slot (slot_day, slot_time, max_orders, current_orders)
+VALUES ('Monday', '16:00-19:00', 20, 0);
+
+-- Insert sample discount
+INSERT INTO discount (product_id, discount_percent, start_date, end_date)
+SELECT 
+    p.product_id,
+    10,
+    SYSDATE,
+    SYSDATE + 30
+FROM product p 
+WHERE p.product_name = 'Organic Apples';
+
+-- Insert sample cart
+INSERT INTO cart (user_id)
+SELECT user_id 
+FROM users 
+WHERE user_name = 'customer1';
+
+-- Insert sample cart products
+INSERT INTO cart_product (cart_id, product_id, quantity)
+SELECT 
+    c.cart_id,
+    p.product_id,
+    2
+FROM cart c, product p, users u
+WHERE u.user_name = 'customer1' 
+AND c.user_id = u.user_id
+AND p.product_name = 'Organic Apples';
 
 
 

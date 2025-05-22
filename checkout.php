@@ -69,80 +69,92 @@ if (isset($_POST['checkout'])) {
 		$item_quantity = $value['quantity'];
 
 		include "connection.php";
-		$sql = " SELECT PRODUCT_ID FROM PRODUCT WHERE PRODUCT_NAME = '$item_name'";
-		$result = oci_parse($connection, $sql);
-		oci_execute($result);;
+		$sql = "SELECT product_id FROM product WHERE product_name = :item_name";
+		$stmt = oci_parse($connection, $sql);
+		oci_bind_by_name($stmt, ':item_name', $item_name);
+		oci_execute($stmt);
 
-		if ($result) {
-			while ($row = oci_fetch_assoc($result)) {
+		if ($stmt) {
+			while ($row = oci_fetch_assoc($stmt)) {
 				$pid = $row['PRODUCT_ID'];
 				//echo "Product ID ".$pid;
 				$un = $_SESSION['username'];
-				$sql3 = "SELECT Customer_ID FROM customer WHERE Username = '$un'";
-				$result1 = oci_parse($connection, $sql3);
-				oci_execute($result1);
+				
+				// Get user_id from users table
+				$sql3 = "SELECT u.user_id, c.customer_id 
+						FROM users u 
+						JOIN customer c ON u.user_id = c.user_id 
+						WHERE u.user_name = :username";
+				$stmt1 = oci_parse($connection, $sql3);
+				oci_bind_by_name($stmt1, ':username', $un);
+				oci_execute($stmt1);
 
-				if ($result1) {
-					while ($row = oci_fetch_assoc($result1)) {
+				if ($stmt1) {
+					while ($row = oci_fetch_assoc($stmt1)) {
+						$uid = $row['USER_ID'];
 						$cid = $row['CUSTOMER_ID'];
-						//echo "Customer ID ".$cid;
 
-						//echo "Quantity".$item_quantity;
-						include('connection.php');
-						$sql = "SELECT * FROM cart WHERE CUSTOMER_ID=$cid and product_id=$pid";
-
+						// Check if cart exists for user
+						$sql = "SELECT * FROM cart WHERE user_id = :uid";
+						$stmt2 = oci_parse($connection, $sql);
+						oci_bind_by_name($stmt2, ':uid', $uid);
+						oci_execute($stmt2);
 						
-				
-						$qry = oci_parse($connection, $sql);
-						oci_execute($qry);
-				
-						$count = oci_fetch_all($qry, $connection);
-						oci_execute($qry);
-				
+						$count = oci_fetch_all($stmt2, $res);
+						
 						if ($count == 0) {
-							include "connection.php";
-							$sql2 = "INSERT INTO cart(Total_Price,Customer_Id,Product_Id) VALUES ('$item_quantity','$cid','$pid')"; //ya total price chaii haina product quantity chaii insert hunxa
-
-							$result3 = oci_parse($connection, $sql2);
-							oci_execute($result3);
-	
-	
-	
-							if ($result3) {
-								echo " <script>
-				alert('Cart Inserted');
-				window.location.href='checkout.php';
-				</script>";
-							} else {
-								echo " <script>
-				alert('Error');
-				window.location.href='product_details.php?product_id=1001';
-				</script>";
-							}
-
-						}
-
-						else{
-
-							include "connection.php";
-
-							$sql50="update cart set TOTAL_PRICE = $item_quantity where customer_id=$cid and product_id=$pid";
-							$result50 = oci_parse($connection, $sql50);
-							oci_execute($result50);
-
-							if ($result50) {
-								echo " <script>
+							// Create new cart
+							$sql2 = "INSERT INTO cart(user_id) VALUES (:uid)";
+							$stmt3 = oci_parse($connection, $sql2);
+							oci_bind_by_name($stmt3, ':uid', $uid);
+							oci_execute($stmt3);
+							
+							if ($stmt3) {
+								// Get cart_id
+								$sql4 = "SELECT cart_id FROM cart WHERE user_id = :uid";
+								$stmt4 = oci_parse($connection, $sql4);
+								oci_bind_by_name($stmt4, ':uid', $uid);
+								oci_execute($stmt4);
+								
+								if ($row = oci_fetch_assoc($stmt4)) {
+									$cart_id = $row['CART_ID'];
+									
+									// Insert into cart_product
+									$sql5 = "INSERT INTO cart_product(cart_id, product_id, quantity) 
+											VALUES (:cart_id, :pid, :quantity)";
+									$stmt5 = oci_parse($connection, $sql5);
+									oci_bind_by_name($stmt5, ':cart_id', $cart_id);
+									oci_bind_by_name($stmt5, ':pid', $pid);
+									oci_bind_by_name($stmt5, ':quantity', $item_quantity);
+									oci_execute($stmt5);
+									
+									if ($stmt5) {
+										echo " <script>
 				alert('Cart Updated');
 				window.location.href='checkout.php';
 				</script>";
+									}
+								}
 							}
-							else{
-									echo "no";
-							} 
-
-						}
-
-			
+						} else {
+							// Update existing cart
+							$sql6 = "UPDATE cart_product 
+									SET quantity = :quantity 
+									WHERE cart_id = (SELECT cart_id FROM cart WHERE user_id = :uid) 
+									AND product_id = :pid";
+									$stmt6 = oci_parse($connection, $sql6);
+									oci_bind_by_name($stmt6, ':quantity', $item_quantity);
+									oci_bind_by_name($stmt6, ':uid', $uid);
+									oci_bind_by_name($stmt6, ':pid', $pid);
+									oci_execute($stmt6);
+									
+									if ($stmt6) {
+										echo " <script>
+				alert('Cart Updated');
+				window.location.href='checkout.php';
+				</script>";
+									}
+								}
 					}
 				}
 				//echo $un;
