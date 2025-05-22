@@ -15,7 +15,7 @@ if (isset($_SESSION['cart'])) {
             <div class="col-12 col-md-2 d-flex align-items-center mb-2 mb-md-0">
                 <a href="index.php" class="d-flex align-items-center">
                     <img src="images/logo.png" alt="FreshBlink" style="height:40px;">
-                    <span class="ml-2 font-weight-bold" style="color:#4BB543;font-size:0.9rem;">FreshBlink</span>
+                    <span class="ml-2 font-weight-bold" style="color:#4BB543;font-size:0.9rem;"></span>
                 </a>
             </div>
             <!-- Search Bar -->

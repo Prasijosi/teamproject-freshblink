@@ -12,8 +12,9 @@ include 'condition_checker/search_conditonal.php';
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     :root {
-      --brand-green: #198754;
+      --brand-green: #4BB543;
       --brand-green-light: #e6f4ea;
+      --brand-green-hover: #3da336;
     }
 
     body {
@@ -89,6 +90,49 @@ include 'condition_checker/search_conditonal.php';
       text-align: center;
       margin-top: 2rem;
     }
+
+    /* Custom button styles */
+    .btn-success {
+      background-color: var(--brand-green);
+      border-color: var(--brand-green);
+    }
+
+    .btn-success:hover {
+      background-color: var(--brand-green-hover);
+      border-color: var(--brand-green-hover);
+    }
+
+    .btn-success:focus {
+      background-color: var(--brand-green);
+      border-color: var(--brand-green);
+      box-shadow: 0 0 0 0.25rem rgba(75, 181, 67, 0.25);
+    }
+
+    .btn-success:active {
+      background-color: var(--brand-green-hover) !important;
+      border-color: var(--brand-green-hover) !important;
+    }
+
+    /* Form control focus styles */
+    .form-control:focus {
+      border-color: var(--brand-green);
+      box-shadow: 0 0 0 0.25rem rgba(75, 181, 67, 0.25);
+    }
+
+    /* Select focus styles */
+    .form-select:focus {
+      border-color: var(--brand-green);
+      box-shadow: 0 0 0 0.25rem rgba(75, 181, 67, 0.25);
+    }
+
+    /* Link styles */
+    a {
+      color: var(--brand-green);
+    }
+
+    a:hover {
+      color: var(--brand-green-hover);
+    }
   </style>
 </head>
 
@@ -154,13 +198,13 @@ include 'condition_checker/search_conditonal.php';
         <div class="results-header">
           <?= $count ?> items found for
           <?php if ($search_Txt): ?>
-            “<?= ucfirst(htmlspecialchars($search_Txt)) ?>”
+            "<?= ucfirst(htmlspecialchars($search_Txt)) ?>"
           <?php elseif ($search_Cat): ?>
-            “<?= ucfirst(htmlspecialchars($search_Cat)) ?>”
+            "<?= ucfirst(htmlspecialchars($search_Cat)) ?>"
           <?php elseif ($product_Category): ?>
-            “<?= ucfirst(htmlspecialchars($product_Category)) ?>”
+            "<?= ucfirst(htmlspecialchars($product_Category)) ?>"
           <?php elseif ($traders): ?>
-            “<?= ucfirst(htmlspecialchars($traders)) ?>”
+            "<?= ucfirst(htmlspecialchars($traders)) ?>"
           <?php else: ?>
             "
             <?= $search_Txt || $search_Cat || $product_Category || $traders ?>
