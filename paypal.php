@@ -89,10 +89,10 @@ $paypal_email = 'sb-2fcha6626063@business.example.com'; //merchant account -> ge
 
 
 				<!-- URLs -->
-				<input type='hidden' name='cancel_return' value='http://localhost/testing/goCart_10/gocart/cancel.php'>
+				<input type='hidden' name='cancel_return' value='http://localhost:8000/cancel.php'>
 				<!--Change according to requirement-->
 
-				<input type='hidden' name='return' value='http://localhost/testing/goCart_10/gocart/successful_checkout.php'>
+				<input type='hidden' name='return' value='http://localhost:8000/successful_checkout.php'>
 				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 h4 mt-5">
 					Order Summary
 				</div>

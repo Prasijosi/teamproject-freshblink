@@ -604,10 +604,10 @@ $paypal_email = 'sb-2fcha6626063@business.example.com'; //merchant account -> ge
 	
 	<input type='hidden' name='quantity' value='$q2'>
 						<!-- URLs -->
-						<input type='hidden' name='cancel_return' value='http://localhost/testing/goCart/cancel.php'>
+						<input type='hidden' name='cancel_return' value='http://localhost:8000/cancel.php'>
 						<!--Change according to requirement-->
 
-						<input type='hidden' name='return' value='http://localhost/testing/goCart/successful_checkout.php'>
+						<input type='hidden' name='return' value='http://localhost:8000/successful_checkout.php'>
 
 
 

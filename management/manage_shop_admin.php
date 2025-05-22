@@ -47,7 +47,7 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
                 include 'connection.php';
                             $to_email = "echo $temail";
                 $subject = "Welcome to goCart!";
-                $headers = "From: goCart  <gocartuk@gmail.com>";
+                $headers = "From: goCart  <josiprasi@gmail.com>";
                 $headers .= "MIME-Version: 1.0\r\n";
                 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
     
@@ -75,12 +75,12 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
     
                     <p>We reviewed your account and the information you provided, and We have decided that you can now sell on goCart</p>
     
-                    <p>To get started with your new account, please visit here! (http://localhost/testing/goCart/index.php) </p>
+                    <p>To get started with your new account, please visit here! (http://localhost:8000/index.php) </p>
     
                     <p>Enjoy selling products on goCart</p>
 
                     <p style="display: flex; justify-content: center; margin-top: 10px;"><center>
-					<a href="http://localhost/testing/goCart/trader/sign_in_trader.php" target="_blank" style="border: 1px solid #0561B3; background-color: #238CEA; 
+					<a href="http://localhost:8000/trader/sign_in_trader.php" target="_blank" style="border: 1px solid #0561B3; background-color: #238CEA; 
 					color: #fff; text-decoration: none; font-size: 18px; padding: 10px 20px;">Go To Your Account</a></div>
 				</center></p>
     
@@ -89,7 +89,7 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
                 </div>
     
                 <div id="footer" style="margin-bottom: 20px; padding: 0px 8px; text-align: center;">
-                    <a href="http://localhost/testing/goCart/index.php" target="_blank" style="text-decoration: none; color: #238CEA;">@goCart</a> 
+                    <a href="http://localhost:8000/index.php" target="_blank" style="text-decoration: none; color: #238CEA;">@goCart</a> 
                 </div>
             </div>
         </body>
@@ -164,7 +164,7 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
             include 'connection.php';
                         $to_email = "echo $temail";
             $subject = "Account Scheduled for Deletion!";
-            $headers = "From: goCart  <gocartuk@gmail.com>";
+            $headers = "From: goCart  <josiprasi@gmail.com>";
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
@@ -202,7 +202,7 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
 			</div>
 
 			<div id="footer" style="margin-bottom: 20px; padding: 0px 8px; text-align: center;">
-				<a href="http://localhost/testing/goCart/index.php" target="_blank" style="text-decoration: none; color: #238CEA;">@goCart</a> 
+				<a href="http://localhost:8000/index.php" target="_blank" style="text-decoration: none; color: #238CEA;">@goCart</a> 
 			</div>
 		</div>
 	</body>

@@ -19,7 +19,7 @@ $un = $_SESSION['username'];
 
 $to_email = "echo $cemail";
 $subject = "Your goCart order has been received!";
-$headers = "From: goCart  <gocartuk@gmail.com>";
+$headers = "From: goCart  <josiprasi@gmail.com>";
 $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
@@ -241,7 +241,7 @@ $message = '
 
 <div id="wrapper" style="max-width: 1000px; margin: auto auto; padding: 20px;">
 <div id="logo" style="">
-				<center><h1 style="margin: 0px;"><a href="http://localhost/testing/goCart/index.php" target="_blank"><img style="max-height: 75px;" src="https://user-images.githubusercontent.com/51358696/124447031-b79da580-dda0-11eb-8f13-b9751e8fa7d1.png" ></a></h1></center>
+				<center><h1 style="margin: 0px;"><a href="http://localhost:8000/index.php" target="_blank"><img style="max-height: 75px;" src="https://user-images.githubusercontent.com/51358696/124447031-b79da580-dda0-11eb-8f13-b9751e8fa7d1.png" ></a></h1></center>
 			</div>
 
             <div id="content" style="font-size: 16px; padding: 25px; background-color: #fff;
@@ -253,7 +253,7 @@ $message = '
                 Bill From: <br>
                 goCart <br>
                 Clechshudderfax <br>
-                gocartuk@gmail.com <br>
+                josiprasi@gmail.com <br>
                 <br>
                 
                 

@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
                             $to = $email;
                             $subject = 'Verification Code';
                             $message = 'Your 6-Digit OTP Verification Code is : ' . $random_number . '';
-                            $headers = "From: gocartuk@gmail.com\r\nReply-To: gocartuk@gmail.com";
+                            $headers = "From: josiprasi@gmail.com\r\nReply-To: josiprasi@gmail.com";
                             $mail_sent = mail($to, $subject, $message, $headers);
 
                             if ($mail_sent == true) {
