@@ -51,9 +51,17 @@ a:after{
 
 .featured-categories-row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   width: 100%;
+  gap: 1rem;
 }
+
+@media (min-width: 768px) {
+  .featured-categories-row {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
 .featured-category-card {
   flex: 1 1 0;
   border-radius: 14px;

@@ -1,14 +1,14 @@
 <?php
 $count = 0;
 include 'connection.php';
-$search_Cat = "";
-$search_Txt = "";
-$product_Category = "";
-$traders = "";
+@$search_Cat = "";
+@$search_Txt = "";
+@$product_Category = "";
+@$traders = "";
 
 if (isset($_GET['search_Cat']) || isset($_GET['search_Txt'])) {
 
-    $search_Cat = $_GET['search_Cat'];
+    @$search_Cat = $_GET['search_Cat'];
 
     @$search_Txt = $_GET['search_Txt'];
 
