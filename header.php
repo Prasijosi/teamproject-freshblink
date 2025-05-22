@@ -40,7 +40,7 @@ if (isset($_SESSION['cart'])) {
                     </span>
                 </a>
                 <?php if (!isset($_SESSION['username'])): ?>
-                    <a href="register.php" class="mx-2 text-dark d-none d-md-inline" style="text-decoration:none;">Register</a>
+                    <a href="sign_up_customer.php" class="mx-2 text-dark d-none d-md-inline" style="text-decoration:none;">Register</a>
                     <a href="sign_in_customer.php" class="btn btn-success ml-2 px-4 py-1" style="font-weight:500;">Login</a>
                 <?php else: ?>
                     <div class="dropdown mx-2">

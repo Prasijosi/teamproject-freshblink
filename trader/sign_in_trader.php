@@ -1,72 +1,74 @@
 <?php include '../start.php'; ?>
-<div class="container w-100 d-flex align-items-center justify-content-center">
-	<div class="row mt-5">
-		<?php
-		if (isset($_GET['msg'])) {
-			$user_created_msg = $_GET['msg'];
-			echo "<div class='col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-2 d-flex align-items-center justify-content-center' style='color:red;'>" . $user_created_msg . "
-		            </div>";
-		}
-		?>
-		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center mt-5">
-			<a href="../index.php">
-				<img src="../images/logo.png" class="img-fluid" style="width: 70px; height: 70px;">
-			</a>
-		</div>
-		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center mt-3">
-			<form method="POST" action="trader_sign_in.php">
-				<div class="row">
-					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center">
-						<div class="h4">Trader/Admin : Sign-In</div>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="inputEmail" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-form-label">Email</label>
-					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-						<input type="email" class="form-control" id="inputEmail" placeholder="Email" required name="email" value="<?php if (isset($_COOKIE["email"])) {
-																																echo $_COOKIE["email"];
-																															}  ?>">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="inputPassword" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-form-label">Password</label>
-					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-						<input type="password" class="form-control" id="inputPassword" placeholder="Password" required name="password" value="<?php if (isset($_COOKIE["password"])) {
-																																			echo $_COOKIE["password"];
-																																		}  ?>">
-					</div>
-				</div>
+<?php include '../header.php'; ?>
 
-				<div class="form-group row">
-					<select id="sort" class="selectpicker form-control  " name="c">
-						<option value="t" <?php echo (isset($_POST['c']) && $_POST['c'] == "t") ? 'selected="selected"' : ''; ?>>Traders</option>
-						<option value="a" <?php echo (isset($_POST['c']) && $_POST['c'] == "a") ? 'selected="selected"' : ''; ?>>Admin</option>
-					</select>
-				</div>
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="w-100" style="max-width: 500px;">
+        <?php if (isset($_GET['msg'])): ?>
+            <div class="alert alert-danger text-center mt-2">
+                <?= htmlspecialchars($_GET['msg']) ?>
+            </div>
+        <?php endif; ?>
 
+        <div class="text-center mt-4">
+            <a href="../index.php">
+                <img src="../images/logo.png" class="img-fluid" style="width: 70px; height: 70px;" alt="GoCart Logo">
+            </a>
+        </div>
 
-				<div class="form-group row">
-					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="checkBox" value="<?php if (isset($_COOKIE["email"])) { ?> checked <?php }  ?>">
-							<label class="form-check-label" for="checkBox">
-								Remember Me
-							</label>
-						</div>
-					</div>
-				</div>
-				<div class="form-group row">
-					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center ml-2">
-						<button type="submit" class="btn btn-success" name="submit">Sign In</button>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center">
-						<a href="sign_up_trader.php" style="font-size: 16px">Wanna be one of Us? Sign Up Here</a>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+        <form class="border p-4 mt-4 rounded shadow-sm bg-light" method="POST" action="trader_sign_in.php">
+            <h4 class="text-center mb-3">Trader/Admin Sign-In</h4>
+
+            <div class="form-group">
+                <label for="inputEmail">Email</label>
+                <input type="email"
+                       class="form-control"
+                       id="inputEmail"
+                       name="email"
+                       placeholder="Email"
+                       required
+                       value="<?= isset($_COOKIE['email']) ? htmlspecialchars($_COOKIE['email']) : '' ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input type="password"
+                       class="form-control"
+                       id="inputPassword"
+                       name="password"
+                       placeholder="Password"
+                       required
+                       value="<?= isset($_COOKIE['password']) ? htmlspecialchars($_COOKIE['password']) : '' ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="userType">User Type</label>
+                <select id="userType" name="c" class="form-control">
+                    <option value="t" <?= (isset($_POST['c']) && $_POST['c'] == "t") ? 'selected' : '' ?>>Trader</option>
+                    <option value="a" <?= (isset($_POST['c']) && $_POST['c'] == "a") ? 'selected' : '' ?>>Admin</option>
+                </select>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input"
+                       type="checkbox"
+                       id="rememberMe"
+                       name="remember"
+                       <?= isset($_COOKIE["email"]) ? 'checked' : '' ?>>
+                <label class="form-check-label" for="rememberMe">
+                    Remember Me
+                </label>
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-success" name="submit">Sign In</button>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="sign_up_trader.php" style="font-size: 16px;">Wanna be one of us? Sign Up Here</a>
+            </div>
+        </form>
+    </div>
 </div>
-<?php include '../end.php' ?>
+
+<?php include '../footer.php'; ?>
+<?php include '../end.php'; ?>

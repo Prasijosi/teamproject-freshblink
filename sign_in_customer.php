@@ -1,4 +1,5 @@
 <?php include 'start.php'; ?>
+<?php include 'header.php'; ?>
 <div class="container w-100 d-flex align-items-center justify-content-center">
 	<div class="row mt-5">
 		<?php
@@ -26,9 +27,9 @@
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="inputEmail" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-form-label">Email</label>
+					<label for="inputEmail" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-form-label">Email Address</label>
 					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-						<input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" value="<?php if (isset($_COOKIE["email"])) {
+						<input type="email" class="form-control" id="inputEmail" placeholder="Email your email " name="email" value="<?php if (isset($_COOKIE["email"])) {
 																																echo $_COOKIE["email"];
 																															}  ?>">
 					</div>
@@ -36,7 +37,7 @@
 				<div class="form-group row">
 					<label for="inputPassword" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-form-label">Password</label>
 					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-						<input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" value="<?php if (isset($_COOKIE["password"])) {
+						<input type="password" class="form-control" id="inputPassword" placeholder="Enter your Password" name="password" value="<?php if (isset($_COOKIE["password"])) {
 																																			echo $_COOKIE["password"];
 																																		}  ?>">
 					</div>
@@ -65,4 +66,5 @@
 		</div>
 	</div>
 </div>
+<?php include 'footer.php'; ?>
 <?php include 'end.php' ?>
