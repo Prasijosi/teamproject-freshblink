@@ -1,10 +1,7 @@
 <?php
 @include 'start.php';
 
-if (!isset($_SESSION['username'])) {
-    header('Location:sign_in_customer.php');
-    exit;
-}
+$is_authenticated = !isset($_SESSION['username']);
 
 include 'connection.php';
 
@@ -13,7 +10,7 @@ if (isset($_POST['review'])) {
     $rating = $_POST['rating'];
     $description = $_POST['description'];
     $product_id = $_GET['product_id'];
-    $customer_id = $_SESSION['customer_id'];
+    @$customer_id = @$_SESSION['customer_id'];
 
     $sql1 = "INSERT INTO review (Rating, Description, Customer_Id, Product_Id, Dates, Review_Status)
              VALUES (:rating, :description, :customer_id, :product_id, SYSDATE, 0)";
@@ -37,7 +34,7 @@ $product_image = '';
 
 if (isset($_GET['product_id'])) {
     $product_id = $_GET['product_id'];
-    $customer_id = $_SESSION['customer_id'];
+    @$customer_id = @$_SESSION['customer_id'];
 
     $sql = "SELECT * FROM product WHERE Product_Id = :product_id";
     $result = oci_parse($connection, $sql);
@@ -65,6 +62,7 @@ if (isset($_GET['product_id'])) {
     }
 </style>
 
+<?php if (!$is_authenticated): ?>
 <div class="container review-container py-5">
     <h3 class="text-center mb-4">Review Product: <?php echo htmlspecialchars($product_name); ?></h3>
     <div class="text-center mb-4">
@@ -88,6 +86,14 @@ if (isset($_GET['product_id'])) {
         </div>
     </form>
 </div>
+<?php else: ?>
+<div class="container py-5 text-center">
+    <div class="alert alert-info">
+        <h4 style="background-color: transparent;">Please <a href="sign_in_customer.php" class="alert-link">sign in</a> to leave a review</h4>
+        <p style="background-color: transparent;">You must be logged in to submit a product review.</p>
+    </div>
+</div>
+<?php endif; ?>
 
 <?php include 'end.php'; ?>
 

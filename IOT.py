@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 oracledb.init_oracle_client(lib_dir=r"C:\oracle\instantclient_19_11")
 
 # Arduino Serial Port Settings
-SERIAL_PORT = 'COM3'  # Update with your actual COM port
+SERIAL_PORT = 'COM3'
 BAUD_RATE = 9600
 
 # Oracle DB Connection

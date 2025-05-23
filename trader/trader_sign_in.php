@@ -6,7 +6,7 @@ if (isset($_POST['submit'])) {
 
     if (!empty($email) && !empty($password) && $_POST['c'] == 't') {
 
-        $sql = "SELECT * FROM trader WHERE Email='$email' and Password='$password' and Trader_Verification='1' and Status='approved'";
+        $sql = "SELECT * FROM trader WHERE Email='$email' and Password='$password' and Trader_Verification='1'";
 
         include 'connection.php';
 
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
             }
         } else {
             // Check if trader exists but is not approved
-            $sql = "SELECT * FROM trader WHERE Email='$email' and Password='$password' and Status='pending'";
+            $sql = "SELECT * FROM trader WHERE Email='$email' and Password='$password'";
             $qry = oci_parse($connection, $sql);
             oci_execute($qry);
             $count = oci_fetch_all($qry, $connection);

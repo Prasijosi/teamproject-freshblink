@@ -38,7 +38,6 @@ CREATE TABLE Trader (
   Email varchar2(255) NOT NULL,
   Profile_Image varchar(200)  NULL,
   Trader_Verification integer  NULL,
-  Status varchar2(20) DEFAULT 'pending' NOT NULL,
   CONSTRAINT Trader_PK PRIMARY KEY (Trader_Id),
   CONSTRAINT Trader__UK UNIQUE (Username)
 );
@@ -237,23 +236,23 @@ INSERT INTO Admin (Admin_Id, Username, Password, Email) VALUES (5002, 'Joshiprat
 
 
 ------Trader
-INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification, Status) VALUES
-(4001, 'Jack Morris', 'JackMorris756', 'Az@12345?', '9802365421', 'jackmorris756@gmail.com', '', 1, 'approved');
+INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification) VALUES
+(4001, 'Jack Morris', 'JackMorris756', 'Az@12345?', '9802365421', 'jackmorris756@gmail.com', '', 1);
 
-INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification, Status) VALUES
-(4002, 'Tim Hilton', 'timhilton31', 'Az@12345?', '9802365422', 'timhilton31@gmail.com', '', 1, 'approved');
+INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification) VALUES
+(4002, 'Tim Hilton', 'timhilton31', 'Az@12345?', '9802365422', 'timhilton31@gmail.com', '', 1);
 
-INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification, Status) VALUES
-(4003, 'Jimmy Chu', 'jimmychu236', 'Az@12345?', '9802365423', 'jimmychu236@gmail.com', '', 1, 'approved');
+INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification) VALUES
+(4003, 'Jimmy Chu', 'jimmychu236', 'Az@12345?', '9802365423', 'jimmychu236@gmail.com', '', 1);
 
-INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification, Status) VALUES
-(4004, 'Kamala Harris', 'kamala54', 'Az@12345?', '9802365424', 'kamala54@gmail.com', '', 1, 'approved');
+INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification) VALUES
+(4004, 'Kamala Harris', 'kamala54', 'Az@12345?', '9802365424', 'kamala54@gmail.com', '', 1);
 
-INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification, Status) VALUES
-(4005, 'Tom Hardy', 'hardytom69', 'Az@12345?', '9802365425', 'hardytom69@gmail.com', '', 1, 'approved');
+INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification) VALUES
+(4005, 'Tom Hardy', 'hardytom69', 'Az@12345?', '9802365425', 'hardytom69@gmail.com', '', 1);
 
-INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification, Status) VALUES
-(4007, 'Pratish Joshi', 'Pratish', 'Azeeta@1', '9860802472', 'joshipratish12@gmail.com', '', 1, 'approved');
+INSERT INTO Trader (Trader_Id, Name, Username, Password, Contact, Email, Profile_Image, Trader_Verification) VALUES
+(4007, 'Pratish Joshi', 'Pratish', 'Azeeta@1', '9860802472', 'joshipratish12@gmail.com', '', 1);
 
 --
 
