@@ -1,35 +1,54 @@
 <?php
 session_start();
 if (isset($_POST['submit'])) {
-    $email = $_POST['email'];
-    $pincode = $_POST['pincode'];
-    if (!empty($email) && !empty($pincode)) {
+    $email = trim($_POST['email']);
+    $pincode = trim($_POST['pincode']);
+    
+    if (empty($email) || empty($pincode)) {
+        header('Location:../customer_email_verify.php?msg=Please fill in all fields');
+        exit();
+    }
 
-        include('../connection.php');
+    include('../connection.php');
 
-        $sql = "SELECT * FROM customer WHERE Email='$email' and Email_Verify='$pincode'";
-        $result = oci_parse($connection, $sql);
-        oci_execute($result);
+    // First check if the email exists
+    $check_sql = "SELECT * FROM customer WHERE Email = :email";
+    $check_stmt = oci_parse($connection, $check_sql);
+    oci_bind_by_name($check_stmt, ':email', $email);
+    oci_execute($check_stmt);
+    
+    if (oci_fetch($check_stmt)) {
+        // Email exists, now verify the pin
+        $verify_sql = "SELECT * FROM customer WHERE Email = :email AND Email_Verify = :pincode";
+        $verify_stmt = oci_parse($connection, $verify_sql);
+        oci_bind_by_name($verify_stmt, ':email', $email);
+        oci_bind_by_name($verify_stmt, ':pincode', $pincode);
+        oci_execute($verify_stmt);
 
-        $count = oci_fetch_all($result, $connection);
-        oci_execute($result);
-
-        if ($count >= 1) {
-            echo $count;
-
-            include '../connection.php';
-            $sql2 = "UPDATE CUSTOMER set EMAIL_VERIFY='0' where EMAIL = '$email' and EMAIL_VERIFY='$pincode'";
-            $qry = oci_parse($connection, $sql2);
-            oci_execute($qry);
-            header('Location:../sign_in_customer.php?message=Email Successfully Verified');
-            exit();
+        if (oci_fetch($verify_stmt)) {
+            // Update verification status
+            $update_sql = "UPDATE CUSTOMER SET EMAIL_VERIFY = '0' WHERE EMAIL = :email AND EMAIL_VERIFY = :pincode";
+            $update_stmt = oci_parse($connection, $update_sql);
+            oci_bind_by_name($update_stmt, ':email', $email);
+            oci_bind_by_name($update_stmt, ':pincode', $pincode);
+            
+            if (oci_execute($update_stmt)) {
+                header('Location:../sign_in_customer.php?message=Email Successfully Verified');
+                exit();
+            } else {
+                header('Location:../customer_email_verify.php?msg=Verification failed. Please try again.');
+                exit();
+            }
         } else {
-            header('Location:../customer_email_verify.php?msg=Invalid Email / Pin Code');
+            header('Location:../customer_email_verify.php?msg=Invalid verification code');
             exit();
         }
     } else {
-        header('Location:customer_email_verify_process.php?msg=User not Registered!');
+        header('Location:../customer_email_verify.php?msg=Email not found. Please check your email address.');
         exit();
     }
+} else {
+    header('Location:../customer_email_verify.php?msg=Invalid request');
+    exit();
 }
 ?>

@@ -53,6 +53,7 @@ if (isset($_GET['msg'])) {
                             <th>Trader Name</th>
                             <th>Shop Name</th>
                             <th>Shop Details</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -93,6 +94,7 @@ if (isset($_GET['msg'])) {
                             $tname = $row['NAME'];
                             $sname = $row['SHOP_NAME'];
                             $sdetails = $row['SHOP_DESCRIPTION'];
+                            $status = $row['STATUS'];
 
                             $s = $s + 1;
                             ?>
@@ -101,6 +103,15 @@ if (isset($_GET['msg'])) {
                                 <td class="text-center"><?php echo $tname; ?></td>
                                 <td class="text-center"><?php echo $sname; ?></td>
                                 <td class="text-center"><?php echo $sdetails; ?></td>
+                                <td class="text-center">
+                                    <span class="badge <?php 
+                                        echo $status === 'pending' ? 'bg-warning' : 
+                                            ($status === 'approved' ? 'bg-success' : 
+                                            ($status === 'rejected' ? 'bg-danger' : 'bg-secondary')); 
+                                    ?>">
+                                        <?php echo ucfirst($status); ?>
+                                    </span>
+                                </td>
                                 <td class="text-center">
                                     <form method="POST" action="manage_shop_admin.php" class="d-inline">
                                         <input type="hidden" name="sid" value="<?php echo $sid; ?>">

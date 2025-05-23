@@ -243,7 +243,7 @@ $message = '
 
 <div id="wrapper" style="max-width: 1000px; margin: auto auto; padding: 20px;">
 <div id="logo" style="">
-				<center><h1 style="margin: 0px;"><a href="http://localhost:8000/index.php" target="_blank"><img style="max-height: 75px;" src="https://user-images.githubusercontent.com/51358696/124447031-b79da580-dda0-11eb-8f13-b9751e8fa7d1.png" ></a></h1></center>
+				<center><h1 style="margin: 0px;"><a href="http://localhost:8000/index.php" target="_blank">FreshBlink</a></h1></center>
 			</div>
 
             <div id="content" style="font-size: 16px; padding: 25px; background-color: #fff;
@@ -362,8 +362,6 @@ $message .='
 </html>
 ';
 
-$message .= 'Dear :'.$cname2.',shop again! ';
-
 }
 
 
@@ -373,15 +371,22 @@ else{
 
 }
 
+include 'sendmail.php';
 
 if($gt>0){
-	if (mail($to_email, $subject, $message, $headers)) {
-		echo "<div class='col-12 col-sm-12 col-md-12 col-xl-12 col-lg-12 d-flex align-items-center justify-content-center'>Email successfully sent to $to_email...</div>";
+	$result = sendEmail(
+		$to_email,
+		'',
+		$subject,
+		$message,
+		""
+	);
+	
+	if ($result === true) {
+		echo "✅ Email sent successfully.";
 	} else {
-		echo "Email sending failed...";
+		echo $result; // Displays the error message
 	}
-	
-	
 }
 else{
 	// header('Location:index.php');

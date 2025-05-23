@@ -46,7 +46,6 @@ if (isset($_POST['submit'])) {
                         oci_execute($qry);
                         
                         if ($qry) {
-                            //echo "User Inserted";
 
                             $_SESSION['username'] = $uname;
                             
@@ -54,9 +53,16 @@ if (isset($_POST['submit'])) {
                             $subject = 'Verification Code';
                             $message = 'Your 6-Digit OTP Verification Code is : ' . $random_number . '';
                             $headers = "From: josiprasi@gmail.com\r\nReply-To: josiprasi@gmail.com";
-                            $mail_sent = mail($to, $subject, $message, $headers);
-
-                            if ($mail_sent == true) {
+                            include 'sendmail.php';
+                            $result = sendEmail(
+                                $to_email,
+                                '',
+                                $subject,
+                                $message,
+                                ""
+                            );
+                            
+                            if ($result === true) {
                                 unset($_SESSION['username']);
                                 echo "<script>alert('Check your Email for 6-Digit OTP Code');</script>";
                             } else {

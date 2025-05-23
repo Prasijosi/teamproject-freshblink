@@ -1,51 +1,96 @@
-<footer>
-  <div class="pt-5 pb-2" style="background:#e5e5e5;">
-    <div class="row" style="background:#e5e5e5;">
+<style>
+  .footer {
+    background-color: white;
+    padding: 2rem 1rem;
+  }
+
+  .footer-logo {
+    height: 50px;
+  }
+
+  .footer-text {
+    color: #4BB543;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    color: #343a40;
+  }
+
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-heading {
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 576px) {
+    .footer-logo {
+      height: 40px;
+    }
+    .footer-text {
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
+<footer class="footer">
+  <div class="container-fluid">
+    <div class="row text-center text-md-left">
       <!-- Logo -->
-      <div class="col-12 col-md-3 mb-4 mb-md-0 d-flex flex-column align-items-md-start align-items-center" style="background:#e5e5e5;">
-        <img src="images/logo.png" alt="FreshBlink" style="height:50px; background:#e5e5e5;">
-        <span class="ml-2 font-weight-bold" style="color:#4BB543; font-size:1.3rem; background:#e5e5e5;">FreshBlink</span>
+      <div class="col-12 col-md-3 mb-4 d-flex flex-column align-items-center align-items-md-start">
+        <img src="images/logo.png" alt="FreshBlink" class="footer-logo mb-2">
       </div>
+
       <!-- Account -->
-      <div class="col-12 col-md-3 mb-4 mb-md-0" style="background:#e5e5e5;">
-        <h5 class="font-weight-bold mb-3" style="background:#e5e5e5;">Account</h5>
+      <div class="col-12 col-md-3 mb-4 footer-links">
+        <h5 class="footer-heading">Account</h5>
         <ul class="list-unstyled">
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">Wishlist</a></li>
-          <li style="background:#e5e5e5;"><a href="cart.php" class="text-dark">Cart</a></li>
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">Track Order</a></li>
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">Shipping Details</a></li>
+          <li><a href="#">Wishlist</a></li>
+          <li><a href="cart.php">Cart</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Shipping Details</a></li>
         </ul>
       </div>
+
       <!-- Useful Links -->
-      <div class="col-12 col-md-3 mb-4 mb-md-0" style="background:#e5e5e5;">
-        <h5 class="font-weight-bold mb-3" style="background:#e5e5e5;">Useful links</h5>
+      <div class="col-12 col-md-3 mb-4 footer-links">
+        <h5 class="footer-heading">Useful Links</h5>
         <ul class="list-unstyled">
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">About Us</a></li>
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">Contact us</a></li>
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">Hot Deals</a></li>
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">Promotions</a></li>
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">New product</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Hot Deals</a></li>
+          <li><a href="#">Promotions</a></li>
+          <li><a href="#">New Product</a></li>
         </ul>
       </div>
+
       <!-- Help Center -->
-      <div class="col-12 col-md-3" style="background:#e5e5e5;">
-        <h5 class="font-weight-bold mb-3" style="background:#e5e5e5;">Help Center</h5>
+      <div class="col-12 col-md-3 mb-4 footer-links">
+        <h5 class="footer-heading">Help Center</h5>
         <ul class="list-unstyled">
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">Payment</a></li>
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">Refund</a></li>
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">Checkout</a></li>
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">Q&amp;A</a></li>
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">Shipping</a></li>
-          <li style="background:#e5e5e5;"><a href="#" class="text-dark">Privacy Policy</a></li>
+          <li><a href="#">Payment</a></li>
+          <li><a href="#">Refund</a></li>
+          <li><a href="#">Checkout</a></li>
+          <li><a href="#">Q&A</a></li>
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Privacy Policy</a></li>
         </ul>
       </div>
     </div>
-    <div class="row align-items-center pb-3" style="background:#e5e5e5;">
-      <div class="col-12 col-md-4 text-center text-md-left mb-2 mb-md-0" style="background:#e5e5e5;">
-        <span style="color:#333; background:#e5e5e5;">&copy; 2025, All rights reserved</span>
+
+    <hr>
+
+    <div class="row text-center text-md-left align-items-center">
+      <div class="col-12 col-md-4 mb-2 mb-md-0">
+        <span class="text-dark">&copy; 2025, All rights reserved</span>
       </div>
-      <div class="col-12 col-md-4 text-center mb-2 mb-md-0" style="background:#e5e5e5;">
-        <img src="images/paypal.webp" alt="PayPal" style="height:38px; background:#e5e5e5;">
+      <div class="col-12 col-md-4 mb-2 mb-md-0 text-center">
+        <img src="images/paypal.webp" alt="PayPal" style="height:38px;">
       </div>
     </div>
   </div>

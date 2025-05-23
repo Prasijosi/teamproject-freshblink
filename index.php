@@ -95,7 +95,7 @@ include 'condition_checker/get_all_products.php';
         <div class="container my-5">
             <h3 class="font-weight-bold mb-4">Popular Products</h3>
             <div class="row">
-                <?php foreach (array_slice($popular_products, 5, length: 7) as $product): ?>
+                <?php foreach (array_slice($popular_products, 5, length: 6) as $product): ?>
                     <a href="<?= $product['link'] ?>" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4">
                         <div class="card h-100 border-0 shadow-sm" style="border-radius: 14px;">
                             <img src="<?= $product['img'] ?>" class="card-img-top p-3" alt="<?= htmlspecialchars($product['name']) ?>" style="height:120px;object-fit:contain;">
