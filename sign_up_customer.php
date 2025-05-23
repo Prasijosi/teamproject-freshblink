@@ -61,6 +61,34 @@ include 'start.php';
                     </div>
                 </div>
 
+                <fieldset class="form-group">
+                    <div class="row">
+                        <legend class="col-form-label col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-0">Gender</legend>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="genderRadio" value="Male" <?php if (isset($_GET['gender']) && $_GET['gender'] == "Male") echo "checked"; ?> checked style="width: 1vw; height: 1vw;">
+                                <label class="form-check-label" for="genderRadio">
+                                    Male
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="genderRadio1" style="width: 1vw; height: 1vw;" value="Female" <?php if (isset($_GET['gender']) && $_GET['gender'] == "Female") {
+                                                                                                                                                                    echo "checked";
+                                                                                                                                                                }  ?> />
+                                <label class="form-check-label" for="genderRadio1">
+                                    Female
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="genderRadio2" value="Other" <?php if (isset($_GET['gender']) && $_GET['gender'] == "Other") echo "checked"; ?> style="width: 1vw; height: 1vw;">
+                                <label class="form-check-label" for="genderRadio2">
+                                    Other
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
                 <div class="form-group row">
                     <label for="inputDOB" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-form-label">Date of Birth</label>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
