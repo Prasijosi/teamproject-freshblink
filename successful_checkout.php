@@ -362,8 +362,6 @@ $message .='
 </html>
 ';
 
-$message .= 'Dear :'.$cname2.',shop again! ';
-
 }
 
 
@@ -373,15 +371,22 @@ else{
 
 }
 
+include 'sendmail.php';
 
 if($gt>0){
-	if (mail($to_email, $subject, $message, $headers)) {
-		echo "<div class='col-12 col-sm-12 col-md-12 col-xl-12 col-lg-12 d-flex align-items-center justify-content-center'>Email successfully sent to $to_email...</div>";
+	$result = sendEmail(
+		$to_email,
+		'',
+		$subject,
+		$message,
+		""
+	);
+	
+	if ($result === true) {
+		echo "✅ Email sent successfully.";
 	} else {
-		echo "Email sending failed...";
+		echo $result; // Displays the error message
 	}
-	
-	
 }
 else{
 	// header('Location:index.php');
