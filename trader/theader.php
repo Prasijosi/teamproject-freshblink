@@ -47,5 +47,3 @@
 	</body>
 
 	</html>
-	<!-- nav ends here -->
-	<!--	echo  "<a href='#' class='nav-item nav-link'><i class='fa fa-user'></i> &nbsp; $username</a>"; -->

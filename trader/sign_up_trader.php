@@ -5,7 +5,7 @@
     <div class="row mt-3 w-100">
         <div class="col-12 d-flex align-items-center justify-content-center mt-5">
             <a href="index.php">
-                <img src="../images/logo.png" class="img-fluid" style="width: 70px; height: 70px;">
+                <img src="../images/logo.png" class="img-fluid" style="width: 10rem;">
             </a>
         </div>
 

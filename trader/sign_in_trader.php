@@ -1,6 +1,4 @@
 <?php include '../start.php'; ?>
-<?php include '../header.php'; ?>
-
 <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
     <div class="w-100" style="max-width: 500px;">
         <?php if (isset($_GET['msg'])): ?>
@@ -11,7 +9,7 @@
 
         <div class="text-center mt-4">
             <a href="../index.php">
-                <img src="../images/logo.png" class="img-fluid" style="width: 70px; height: 70px;" alt="FreshBlink Logo">
+                <img src="../images/logo.png" class="img-fluid" style="width: 20rem" alt="FreshBlink Logo">
             </a>
         </div>
 

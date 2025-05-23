@@ -46,7 +46,6 @@ if (isset($_POST['submit'])) {
                         oci_execute($qry);
                         
                         if ($qry) {
-                            //echo "User Inserted";
 
                             $_SESSION['username'] = $uname;
                             

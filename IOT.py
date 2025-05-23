@@ -11,7 +11,7 @@ BAUD_RATE = 9600
 # Oracle DB Connection
 DB_USER = "admin"
 DB_PASS = "Tester2!"
-DB_CONN = "localhost/XE"   
+DB_CONN = "127.0.0.1/XE"   
  
 
 def get_serial_uid():

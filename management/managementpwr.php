@@ -9,8 +9,6 @@ if (isset($_GET['msg'])) {
 	echo "";
 }
 
-//SELECT * FROM `order` INNER JOIN `product` INNER JOIN `shop` INNER JOIN `trader` ON trader.Trader_Id=shop.Trader_id  ON shop.Shop_Id=product.Shop_Id AND order.Product_Id=product.Product_Id where shop.Trader_id='4001'
-
 ?>
 <div class="container-fluid main-content">
 	<div class="card shadow-sm">
