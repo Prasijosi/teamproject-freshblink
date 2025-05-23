@@ -44,170 +44,225 @@ oci_execute($statement);
 ?>
 
 <style>
+	.product-container {
+		background: #ffffff;
+		border-radius: 15px;
+		box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+		padding: 2rem;
+		margin: 2rem 0;
+	}
+
 	.product-image {
 		width: 100%;
-		max-width: 450px;
-		border-radius: 10px;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-		object-fit: cover;
+		max-width: 500px;
+		border-radius: 12px;
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+		transition: transform 0.3s ease;
+	}
+
+	.product-image:hover {
+		transform: scale(1.02);
 	}
 
 	.product-details {
 		height: auto !important;
 		min-height: 150px;
 		resize: none;
-		border: none;
+		border: 1px solid #e0e0e0;
 		background-color: #f8f9fa;
-		padding: 10px;
-		border-radius: 8px;
+		padding: 15px;
+		border-radius: 10px;
+		font-size: 0.95rem;
+		line-height: 1.6;
 	}
 
 	.fa-star {
-		color: orange;
-		font-size: 1.4rem;
-	}
-
-	.card {
-		border: none;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-		border-radius: 1rem;
+		color: #ffc107;
+		font-size: 1.2rem;
+		margin-right: 2px;
 	}
 
 	.section-title {
 		font-weight: 600;
+		color: #2c3e50;
+		margin-bottom: 1.2rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 2px solid #e9ecef;
+	}
+
+	.info-box {
+		background: #f8f9fa;
+		border-radius: 10px;
+		padding: 1rem;
 		margin-bottom: 1rem;
+		border: 1px solid #e9ecef;
+	}
+
+	.info-label {
+		font-weight: 600;
+		color: #495057;
+		margin-bottom: 0.3rem;
+	}
+
+	.info-value {
+		color: #212529;
+	}
+
+	.review-section {
+		background: #ffffff;
+		border-radius: 15px;
+		box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+		padding: 2rem;
+		margin-top: 2rem;
 	}
 
 	.review-card {
-		width: 100%;
-		margin: 30px auto;
-		border: 1px solid #ccc;
+		background: #f8f9fa;
+		border: 1px solid #e9ecef;
 		border-radius: 8px;
-		overflow: hidden;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+		padding: 1.2rem;
+		margin-bottom: 1rem;
+	}
+
+	.review-card:last-child {
+		margin-bottom: 0;
 	}
 
 	.review-header {
-		background-color: #999;
-		color: white;
-		text-align: center;
-		padding: 10px;
-		font-weight: bold;
-		font-size: 1.2rem;
-	}
-
-	.review-item {
-		padding: 20px;
-		border-bottom: 1px solid #eee;
-	}
-
-	.review-item:last-child {
-		border-bottom: none;
-	}
-
-	.review-item i {
-		color: #f0ad4e;
+		background: #f8f9fa;
+		color: #2c3e50;
+		font-weight: 600;
+		padding: 1rem;
+		border-radius: 8px;
+		margin-bottom: 1.5rem;
+		border-bottom: 2px solid #e9ecef;
 	}
 
 	.user-icon {
-		width: 30px;
-		height: 30px;
-		background-color: #ddd;
+		width: 35px;
+		height: 35px;
+		background: #e9ecef;
 		border-radius: 50%;
-		display: inline-block;
-		vertical-align: middle;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		margin-right: 10px;
+		color: #6c757d;
 	}
 
 	.review-text {
-		margin-top: 10px;
+		margin-top: 0.8rem;
+		padding: 0.8rem;
+		background: #ffffff;
+		border-radius: 6px;
+		margin-top: 1rem;
+		padding: 1rem;
+		background: #f8f9fa;
+		border-radius: 8px;
+		font-size: 0.95rem;
+		line-height: 1.6;
 	}
 
-	.review-container {
-		max-width: 650px;
-		margin: 50px auto;
-		background-color: #ffffff;
-		border-radius: 10px;
-		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-		padding: 40px;
+	.quantity-input {
+		width: 100px !important;
+		text-align: center;
 	}
 
-	.star-rating .fa-star {
-		font-size: 1.5rem;
-		cursor: pointer;
-		color: #ddd;
-		transition: color 0.3s;
+	.btn-add-cart {
+		padding: 0.8rem 2rem;
+		font-weight: 600;
+		border-radius: 8px;
+		transition: all 0.3s ease;
 	}
 
-	.star-rating .fa-star.checked {
-		color: #f0ad4e;
+	.btn-add-cart:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 	}
 
-	.form-control:focus {
-		box-shadow: none;
-		border-color: #28a745;
+	.seller-link {
+		color: #28a745;
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	.seller-link:hover {
+		color: #218838;
+		text-decoration: underline;
 	}
 </style>
 
-<diiv class="container">
+<div class="container">
 	<?php include 'header.php'; ?>
+	
 	<?php if (isset($_POST['addtoCart'])) {
 		$qty = $_POST['quantity'];
 		if (!isset($_SESSION['username'])) {
 			echo "
-			<div class='row border p-4 mt-4'> 
-        	<div class='col-12 d-flex align-items-center justify-content-center' style='color:red;'>";
-			echo "Please<a href='sign_in_customer.php' style='color:red;' class='mx-1'>Sign-In</a>to place an Order!
-			</div></div>";
+			<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+				Please <a href='sign_in_customer.php' class='alert-link'>Sign-In</a> to place an Order!
+				<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+			</div>";
 		}
 	} ?>
-	<form action="manage_cart.php" method="POST" class="card my-5 p-4">
+
+	<form action="manage_cart.php" method="POST" class="product-container">
 		<div class="row g-4">
 			<div class="col-md-6 text-center">
-				<img src="<?php echo $product_image; ?>" class="product-image img-fluid" alt="Product">
+				<img src="<?php echo $product_image; ?>" class="product-image img-fluid" alt="<?php echo $product_name; ?>">
 			</div>
 			<div class="col-md-6">
-				<h3 class="mb-3"><?php echo $product_name; ?></h3>
+				<h2 class="mb-4"><?php echo $product_name; ?></h2>
 
-				<h5 class="section-title">Rating</h5>
-				<div class="mb-3"><?php include 'condition_checker/rating_conditional.php'; ?></div>
+				<div class="info-box">
+					<h5 class="section-title">Rating</h5>
+					<div class="mb-3"><?php include 'condition_checker/rating_conditional.php'; ?></div>
+				</div>
 
-				<div class="mb-3">
-					<p class="mb-1"><strong>Sold by:</strong>
-						<a href="search_product.php?search_Cat=<?php echo $shop_name; ?>">
+				<div class="info-box">
+					<h5 class="section-title">Seller Information</h5>
+					<p class="mb-2">
+						<strong>Sold by:</strong>
+						<a href="search_product.php?search_Cat=<?php echo $shop_name; ?>" class="seller-link">
 							<?php echo $shop_name; ?>
 						</a>
 					</p>
 					<p>
-						<a href="search_product.php?search_Cat=<?php echo $shop_name; ?>" class="text-decoration-underline">
+						<a href="search_product.php?search_Cat=<?php echo $shop_name; ?>" class="seller-link">
 							View more from this seller
 						</a>
 					</p>
 				</div>
 
-				<h5 class="section-title">Product Details</h5>
-				<div class="mb-3">
+				<div class="info-box">
+					<h5 class="section-title">Product Details</h5>
 					<textarea class="form-control product-details" disabled><?php echo $product_details; ?></textarea>
 				</div>
 
-				<div class="row g-3 mb-3">
-					<div class="col-md-6">
-						<label class="form-label fw-semibold">Price</label>
-						<input type="text" class="form-control-plaintext" disabled value="<?php echo $product_price; ?>">
-					</div>
-					<div class="col-md-6">
-						<label class="form-label fw-semibold">Availability</label>
-						<input type="text" class="form-control-plaintext" disabled value="<?php echo ($stock == 0 || $stock == "Out of Stock") ? "Out of Stock" : $stock; ?>">
+				<div class="info-box">
+					<div class="row g-3">
+						<div class="col-md-6">
+							<div class="info-label">Price</div>
+							<div class="info-value h4 text-success"><?php echo $product_price; ?></div>
+						</div>
+						<div class="col-md-6">
+							<div class="info-label">Availability</div>
+							<div class="info-value h5 <?php echo ($stock == 0 || $stock == "Out of Stock") ? 'text-danger' : 'text-success'; ?>">
+								<?php echo ($stock == 0 || $stock == "Out of Stock") ? "Out of Stock" : $stock; ?>
+							</div>
+						</div>
 					</div>
 				</div>
 
-				<div class="mb-3">
-					<label class="form-label fw-semibold">Quantity</label>
-					<input type="number" name="quantity" class="form-control w-50" value="1" min="1" max="<?php echo $stock; ?>" required>
+				<div class="info-box">
+					<label class="info-label">Quantity</label>
+					<input type="number" name="quantity" class="form-control quantity-input" value="1" min="1" max="<?php echo $stock; ?>" required>
 				</div>
 
 				<?php if ($stock > 0) { ?>
-					<button type="submit" name="addtoCart" class="btn btn-primary px-4 py-2">Add to Cart</button>
+					<button type="submit" name="addtoCart" class="btn btn-success btn-add-cart">
+						<i></i>Add to Cart
+					</button>
 				<?php } ?>
 
 				<!-- Hidden Fields -->
@@ -220,9 +275,8 @@ oci_execute($statement);
 
 	<div class="row">
 		<div class="col-12 col-md-8">
-			<div class="review-card">
-				<div class="review-header">Customer Review</div>
-
+			<div class="review-section">
+				<h3 class="section-title">Customer Reviews</h3>
 				<?php
 				$hasReviews = false;
 				while ($row = oci_fetch_assoc($statement)) {
@@ -231,9 +285,12 @@ oci_execute($statement);
 					$rating = (int)$row['RATING'];
 					$review = htmlspecialchars($row['DESCRIPTION']);
 
-					echo '<div class="review-item">';
-					echo '  <div><span class="user-icon"></span><strong>' . $name . '</strong></div>';
-					echo '  <div class="mt-2">';
+					echo '<div class="review-card">';
+					echo '  <div class="d-flex align-items-center mb-3">';
+					echo '    <div class="user-icon"><i class="fas fa-user"></i></div>';
+					echo '    <div><strong>' . $name . '</strong></div>';
+					echo '  </div>';
+					echo '  <div class="mb-3">';
 					for ($i = 1; $i <= 5; $i++) {
 						if ($i <= $rating) {
 							echo '<i class="fas fa-star"></i>';
@@ -242,24 +299,25 @@ oci_execute($statement);
 						}
 					}
 					echo '  </div>';
-					echo '  <input type="text" class="form-control review-text" value="' . $review . '" disabled>';
+					echo '  <div class="review-text">' . $review . '</div>';
 					echo '</div>';
 				}
 
 				if (!$hasReviews) {
-					echo '<div class="p-4 text-center">No reviews available for this product.</div>';
+					echo '<div class="text-center p-4 bg-light rounded">';
+					echo '  <i class="far fa-comment-dots fa-3x mb-3 text-muted"></i>';
+					echo '  <p class="text-muted">No reviews available for this product.</p>';
+					echo '</div>';
 				}
 				?>
 			</div>
-
-
 		</div>
 
 		<div class="col-12 col-md-4">
 			<?php include 'review_product.php'; ?>
 		</div>
 	</div>
-</diiv
+</div>
 
 <?php
 include 'footer.php';
