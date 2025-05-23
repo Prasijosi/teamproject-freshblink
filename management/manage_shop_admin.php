@@ -59,7 +59,7 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
             <div id="wrapper" style="max-width: 600px; margin: auto auto; padding: 20px;">
                 
                 <div id="logo" style="">
-                    <center><h1 style="margin: 0px;"><a href="{SITE_ADDR}" target="_blank"><img style="max-height: 75px;" src="https://user-images.githubusercontent.com/51358696/124447031-b79da580-dda0-11eb-8f13-b9751e8fa7d1.png"></a></h1></center>
+                    <center><h1 style="margin: 0px;"><a href="{SITE_ADDR}" target="_blank">FreshBlink</a></h1></center>
                 </div>
                     
                 <div id="content" style="font-size: 16px; padding: 25px; background-color: #fff;
@@ -174,7 +174,7 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
 		<div id="wrapper" style="max-width: 600px; margin: auto auto; padding: 20px;">
 			
 			<div id="logo" style="">
-				<center><h1 style="margin: 0px;"><a href="{SITE_ADDR}" target="_blank"><img style="max-height: 75px;" src="https://user-images.githubusercontent.com/51358696/124447031-b79da580-dda0-11eb-8f13-b9751e8fa7d1.png"></a></h1></center>
+				<center><h1 style="margin: 0px;"><a href="{SITE_ADDR}" target="_blank">FreshBlink</a></h1></center>
 			</div>
 				
 			<div id="content" style="font-size: 16px; padding: 25px; background-color: #fff;

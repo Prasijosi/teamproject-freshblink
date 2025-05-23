@@ -1,6 +1,6 @@
 <style>
   .footer {
-    background-color: #e5e5e5;
+    background-color: white;
     padding: 2rem 1rem;
   }
 
