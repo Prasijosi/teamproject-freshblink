@@ -13,6 +13,7 @@ include 'condition_checker/get_all_products.php';
         }
         ?>
         
+        
 <div class="container-fluid">
     <section class="container">
         <div class="row">
@@ -62,30 +63,30 @@ include 'condition_checker/get_all_products.php';
         <h3 class="font-weight-bold my-4">Featured Categories</h3>
         <div class="featured-categories-row">
             <a href="search_product.php?search_Txt=&search_Cat=Bakery" class="featured-category-card bakery">
-                <img src="images/bakery.png" alt="Bakery">
+                <img src="images/bakery_vector.png" alt="Bakery">
                 <div class="cat-title">
                     Bakery
                 </div>
             </a>
             <a href="search_product.php?search_Txt=&search_Cat=Butcher" class="featured-category-card greengrocer">
-                <img src="images/butcher.png" alt="Butchery">
+                <img src="images/meat_steak.webp" alt="Butchery">
                 <div class="cat-title">
                     Butcher
                 </div>
             </a>
 
             <a href="search_product.php?search_Txt=&search_Cat=Greengrocery" class="featured-category-card greengrocer">
-                <img src="images/greengrocery.png" alt="Greengrocer">
+                <img src="images/vege" alt="Greengrocer">
                 <div class="cat-title">Green grocery </div>
             </a>
             <a href="search_product.php?search_Txt=&search_Cat=Delicatesssen" class="featured-category-card delicatessen">
-                <img src="images/delicatessen.png" alt="Delicatessen">
+                <img src="images/vector.png" alt="Delicatessen">
                 <div class="cat-title">
                     Delicatessen
                 </div>
             </a>
             <a href="search_product.php?search_Txt=&search_Cat=Fishmonger" class="featured-category-card fishmonger">
-                <img src="images/fishmonger.png" alt="Fishmonger">
+                <img src="images/seer_fish.png" alt="Fishmonger">
                 <div class="cat-title">
                     Fish Monger
                 </div>

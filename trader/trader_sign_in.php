@@ -6,7 +6,7 @@ if (isset($_POST['submit'])) {
 
     if (!empty($email) && !empty($password) && $_POST['c'] == 't') {
 
-        $sql = "SELECT * FROM trader WHERE Email='$email' and Password='$password' and Trader_Verification='1'";
+        $sql = "SELECT * FROM trader WHERE Email='$email' and Password='$password' and Trader_Verification='1' and Status='approved'";
 
         include 'connection.php';
 
@@ -28,9 +28,7 @@ if (isset($_POST['submit'])) {
                 setcookie("email", $email, time() + (1 * 60 * 60), "/");
                 setcookie("password", $password, time() + (1 * 60 * 60), "/");
             } else {
-
                 if (isset($_COOKIE["email"])) {
-
                     setcookie("email", "");
                 }
                 if (isset($_COOKIE["password"])) {
@@ -38,7 +36,17 @@ if (isset($_POST['submit'])) {
                 }
             }
         } else {
-            header('Location:sign_in_trader.php?msg=Email / Password Error!');
+            // Check if trader exists but is not approved
+            $sql = "SELECT * FROM trader WHERE Email='$email' and Password='$password' and Status='pending'";
+            $qry = oci_parse($connection, $sql);
+            oci_execute($qry);
+            $count = oci_fetch_all($qry, $connection);
+            
+            if ($count == 1) {
+                header('Location:sign_in_trader.php?msg=Your account is pending approval. Please wait for admin verification.');
+            } else {
+                header('Location:sign_in_trader.php?msg=Email / Password Error!');
+            }
             exit();
         }
     } elseif (!empty($email) && !empty($password) && $_POST['c'] == 'a') {

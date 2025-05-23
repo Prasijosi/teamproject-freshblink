@@ -38,7 +38,7 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
 
 
 
-            $sql5 = "UPDATE trader SET TRADER_VERIFICATION='1' where TRADER_ID=$tid";
+            $sql5 = "UPDATE trader SET TRADER_VERIFICATION='1', Status='approved' where TRADER_ID=$tid";
             $qry5 = oci_parse($connection, $sql5);
             oci_execute($qry5);
     
@@ -126,39 +126,28 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
 
     include 'connection.php';
 
-    $sql = "DELETE FROM shop WHERE  Shop_Id='$sid'"; //only deletes if that shop doesnt have any foregn key  relationship with product table
-    $qry = oci_parse($connection, $sql);
-    oci_execute($qry);
-
-
-    include 'connection.php';
-    $sql8="SELECT * from  trader where Trader_Id=$tid and TRADER_VERIFICATION=0";  //now checking if that trader is new or old , new means trader verifi =0 , old mean 1
+    $sql8 = "SELECT * from shop inner join trader ON shop.trader_Id=trader.trader_Id where Shop_Id=$sid";
     $qry8 = oci_parse($connection, $sql8);
     oci_execute($qry8);
 
     $count8 = oci_fetch_all($qry8, $connection);
     oci_execute($qry8);
 
-    if ($count8 == 1) {   //if new trader then we need to delete that trader account since dis approve button has been pressed
+    if ($count8 == 1) {
         include 'connection.php';
-        $tid1=$_POST['tid'];
-        $sql40="SELECT * from trader  where trader_Id=$tid1";
-        $qry40= oci_parse($connection, $sql40);
+        $tid1 = $_POST['tid'];
+        $sql40 = "SELECT * from trader where trader_Id=$tid1";
+        $qry40 = oci_parse($connection, $sql40);
         oci_execute($qry40);
         while ($row = oci_fetch_assoc($qry40)) {
-           
-            $temail=$row['EMAIL'];
-            $tname=$row['NAME'];
-
+            $temail = $row['EMAIL'];
+            $tname = $row['NAME'];
         }
 
-        $sql41="DELETE FROM trader  where trader_Id=$tid1";
-        $qry41= oci_parse($connection, $sql41);
+        $sql41 = "UPDATE trader SET Status='rejected' where trader_Id=$tid1";
+        $qry41 = oci_parse($connection, $sql41);
         oci_execute($qry41);
 
-
-
-        
         if($qry41){   //sending email saying account has been deleted or disapproved
 
             include 'connection.php';
@@ -223,7 +212,7 @@ if (isset($_POST['submit']) && isset($_POST['sid'])) {
    
 
 
-    if ($qry) {
+    if ($qry8) {
         header('Location:managementseler.php?msg=Shop Deleted');
     } 
     

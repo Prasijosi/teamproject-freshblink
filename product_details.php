@@ -192,7 +192,7 @@ oci_execute($statement);
 	}
 </style>
 
-<div class="container">
+<div class="">
 	<?php include 'header.php'; ?>
 	
 	<?php if (isset($_POST['addtoCart'])) {

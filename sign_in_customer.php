@@ -72,6 +72,7 @@
         border-radius: 5px;
         margin-bottom: 1rem;
     }
+
     @media (max-width: 576px) {
         .signin-container {
             margin: 1rem;
@@ -84,53 +85,49 @@
     }
 </style>
 
-<div class="container">
+<div class="container-fluid px-3">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6">
             <div class="signin-container">
                 <?php
                 if (isset($_GET['msg'])) {
-                    $user_created_msg = $_GET['msg'];
-                    echo "<div class='alert alert-danger text-center'>" . $user_created_msg . "</div>";
+                    echo "<div class='alert alert-danger text-center'>" . htmlspecialchars($_GET['msg']) . "</div>";
                 }
                 if (isset($_GET['message'])) {
-                    $user_created_msg = $_GET['message'];
-                    echo "<div class='alert alert-success text-center'>" . $user_created_msg . "</div>";
+                    echo "<div class='alert alert-success text-center'>" . htmlspecialchars($_GET['message']) . "</div>";
                 }
                 ?>
-                
+
                 <div class="text-center">
                     <a href="index.php">
-                        <img src="images/logo.png" class="signin-logo" alt="Logo">
+                    <img src="images/logo.png" class="img-fluid" style="width: 10rem; ">
                     </a>
                 </div>
 
                 <form method="POST" action="customer/customer_sign_in.php">
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="inputEmail" class="form-label">Email Address</label>
                         <input type="email" class="form-control" id="inputEmail" 
                                placeholder="Enter your email" name="email" 
-                               value="<?php if (isset($_COOKIE["email"])) { echo $_COOKIE["email"]; } ?>">
+                               value="<?php if (isset($_COOKIE["email"])) echo htmlspecialchars($_COOKIE["email"]); ?>">
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="inputPassword" class="form-label">Password</label>
                         <input type="password" class="form-control" id="inputPassword" 
                                placeholder="Enter your password" name="password" 
-                               value="<?php if (isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>">
+                               value="<?php if (isset($_COOKIE["password"])) echo htmlspecialchars($_COOKIE["password"]); ?>">
                     </div>
 
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="remember" 
-                                   id="checkBox" <?php if (isset($_COOKIE["email"])) { ?> checked <?php } ?>>
-                            <label class="form-check-label remember-me" for="checkBox">
-                                Remember Me
-                            </label>
-                        </div>
+                    <div class="mb-3 form-check">
+                        <input class="form-check-input" type="checkbox" name="remember" id="checkBox"
+                            <?php if (isset($_COOKIE["email"])) echo "checked"; ?>>
+                        <label class="form-check-label remember-me" for="checkBox">
+                            Remember Me
+                        </label>
                     </div>
 
-                    <div class="form-group text-center">
+                    <div class="text-center">
                         <button type="submit" class="btn btn-signin" name="submit">Sign In</button>
                     </div>
 
@@ -144,4 +141,4 @@
 </div>
 
 <?php include 'footer.php'; ?>
-<?php include 'end.php' ?>
+<?php include 'end.php'; ?>
