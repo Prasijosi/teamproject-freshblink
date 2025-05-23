@@ -1,6 +1,10 @@
-<?php include 'start.php'; ?>
+<?php
+include 'start.php';
+?>
+<?php include 'header.php'; ?>
+
 <div class="container w-100 d-flex align-items-center justify-content-center">
-	<div class="row mt-5">
+	<div class="row mt-3">
 		<?php
 		if (isset($_GET['msg'])) {
 			$user_created_msg = $_GET['msg'];
@@ -14,10 +18,10 @@
 			</a>
 		</div>
 		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center mt-3">
-			<form method="POST" action="customer/customer_email_verify_process.php">
+			<form class="border p-5 mt-2" method="POST" action="customer/customer_email_verify_process.php">
 				<div class="row">
 					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center">
-						<div class="h4">Verify Your Email</div>
+						<div class="h4 mt-1">Verify Your Email</div>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -37,8 +41,15 @@
 						<button type="submit" class="btn btn-success" name="submit">Verify Email</button>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center justify-content-center">
+						<a href="sign_in_customer.php" style="font-size: 1vw">Back to Sign In</a>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
 </div>
+
+<?php include 'footer.php'; ?>
 <?php include 'end.php' ?>
